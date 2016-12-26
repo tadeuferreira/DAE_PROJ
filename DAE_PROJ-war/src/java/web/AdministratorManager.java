@@ -44,12 +44,9 @@ public class AdministratorManager implements Serializable {
     @EJB
     private ProfissionalSaudeBean profissionalSaudeBean;
     
-<<<<<<< HEAD
     @EJB
     private CuidadorBean cuidadorBean;
     
-=======
->>>>>>> origin/master
     private AdministratorDTO newAdmin;
     private AdministratorDTO currentAdmin;
     
@@ -61,7 +58,6 @@ public class AdministratorManager implements Serializable {
     private static final Logger LOGGER = Logger.getLogger("welcome");
     private static final Logger logger = Logger.getLogger("web.AdministratorManager");
     
-<<<<<<< HEAD
     private CuidadorDTO currentCuidador;
     private CuidadorDTO newCuidador;
     
@@ -88,14 +84,8 @@ public class AdministratorManager implements Serializable {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
         }
         return null;
-=======
-    private UIComponent component;
-    
-    public AdministratorManager() {
-       this.newAdmin = new AdministratorDTO();
->>>>>>> origin/master
     }
-
+   
     public List<CuidadorDTO> getAllCuidadores() {
         try {
             return cuidadorBean.getAllCuidadores();
@@ -133,10 +123,7 @@ public class AdministratorManager implements Serializable {
         }
     }
     
-    
-    
-    
-    
+   ///////ADMIN///////
     public String createAdministrator() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
             administratorBean.createAdministrator(newAdmin.getUsername(), newAdmin.getPassword(), newAdmin.getName(), newAdmin.getEmail());
@@ -160,7 +147,6 @@ public class AdministratorManager implements Serializable {
         }
         return null;
     }
-    
      
     private void clearNewAdministrator(){
      newAdmin = new AdministratorDTO();  
