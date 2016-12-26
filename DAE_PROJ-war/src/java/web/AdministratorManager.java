@@ -30,8 +30,7 @@ import javax.persistence.EntityExistsException;
  *
  * @author brunoalexandredesousahenriques
  */
-
-@Named(value = "administratorManager")
+@Named("administratorManager")
 @ManagedBean
 @SessionScoped
 public class AdministratorManager implements Serializable {
@@ -79,6 +78,7 @@ public class AdministratorManager implements Serializable {
     
      public List<AdministratorDTO> getAllAdministrators(){
         try{
+            System.out.println("GetAllAdmins");
             return administratorBean.getAllAdministrators();
         }catch (Exception e){
              LOGGER.warning("Error: problem in method getAllAdministrators");
