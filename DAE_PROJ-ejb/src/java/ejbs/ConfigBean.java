@@ -6,6 +6,9 @@
 package ejbs;
 
 import dtos.AdministratorDTO;
+import exceptions.EntityAlreadyExistsException;
+import exceptions.EntityDoesNotExistException;
+import exceptions.MyConstraintViolationException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -33,18 +36,16 @@ public class ConfigBean {
            administratorBean.createAdministrator("343434", "Fernando", "Fernando", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("454545", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
           
-      /*  
+      
        }catch (EntityAlreadyExistsException | EntityDoesNotExistException | MyConstraintViolationException e){
           System.err.println("Error:" + e.getMessage());
-       }*/
-        }catch(Exception e){
-            System.err.println("Error: "+ e.getMessage());
-        }
+       }
+
        
            List<AdministratorDTO> administrators = administratorBean.getAllAdministrators();
            
-           for(AdministratorDTO a: administrators){
-               System.out.println(a);            
-           }  
+           administrators.forEach((a) -> {
+               System.out.println(a);
+        });  
     }    
 }
