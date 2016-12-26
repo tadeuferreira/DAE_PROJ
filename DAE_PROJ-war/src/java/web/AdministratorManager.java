@@ -179,6 +179,7 @@ public class AdministratorManager implements Serializable {
         }
     }
     
+    ///////PROFISSIANALSAUDE///////
     public String createProfissionalSaude() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
             profissionalSaudeBean.createProfissionalSaude(newProfissionalSaude.getUsername(), newProfissionalSaude.getPassword(), newProfissionalSaude.getName(), newProfissionalSaude.getEmail());
@@ -281,6 +282,30 @@ public class AdministratorManager implements Serializable {
 
     public void setCurrentProfissionalSaude(ProfissionalSaudeDTO currentProfissionalSaude) {
         this.currentProfissionalSaude = currentProfissionalSaude;
+    }
+
+    public CuidadorBean getCuidadorBean() {
+        return cuidadorBean;
+    }
+
+    public void setCuidadorBean(CuidadorBean cuidadorBean) {
+        this.cuidadorBean = cuidadorBean;
+    }
+
+    public CuidadorDTO getCurrentCuidador() {
+        return currentCuidador;
+    }
+
+    public void setCurrentCuidador(CuidadorDTO currentCuidador) {
+        this.currentCuidador = currentCuidador;
+    }
+
+    public CuidadorDTO getNewCuidador() {
+        return newCuidador;
+    }
+
+    public void setNewCuidador(CuidadorDTO newCuidador) {
+        this.newCuidador = newCuidador;
     }
 
    

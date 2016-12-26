@@ -30,6 +30,9 @@ public class ConfigBean {
     @EJB
     ProfissionalSaudeBean professionalBean;
     
+    @EJB
+    CuidadorBean cuidadorBean;
+    
     @PostConstruct
     public void populateDB() {
     
@@ -52,6 +55,15 @@ public class ConfigBean {
            professionalBean.createProfissionalSaude("456466", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("454324", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("978907", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
+           
+           
+           cuidadorBean.create("56745612", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("45645634", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("78678856", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("24355478", "Carlos", "Carlos", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("45646690", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("45432413", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
+           cuidadorBean.create("97890746", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
 
 
                     
