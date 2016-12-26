@@ -41,10 +41,8 @@ public class AdministratorManager implements Serializable {
     @EJB
     private ProfissionalSaudeBean profissionalSaudeBean;
     
-    private String newAdministratorUsername;
-    private String newAdministratorPassword;
-    private String newAdministratorEmail; 
-    private String newAdministratorName; 
+    private AdministratorDTO newAdmin;
+    private AdministratorDTO currentAdmin;
     
     private String newProfissionalSaudeUsername;
     private String newProfissionalSaudePassword;
@@ -54,17 +52,15 @@ public class AdministratorManager implements Serializable {
     private static final Logger LOGGER = Logger.getLogger("welcome");
     private static final Logger logger = Logger.getLogger("web.AdministratorManager");
     
-    private AdministratorDTO currentAdministrator;
-    
     private UIComponent component;
     
     public AdministratorManager() {
-    
+       this.newAdmin = new AdministratorDTO();
     }
     
     public String createAdministrator() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            administratorBean.createAdministrator(newAdministratorUsername, newAdministratorPassword, newAdministratorName, newAdministratorEmail);
+            administratorBean.createAdministrator(newAdmin.getUsername(), newAdmin.getPassword(), newAdmin.getName(), newAdmin.getEmail());
             clearNewAdministrator();
             return "index?faces-redirect=true";
         }catch (EntityExistsException | EntityDoesNotExistException e){
@@ -88,20 +84,16 @@ public class AdministratorManager implements Serializable {
     
      
     private void clearNewAdministrator(){
-        setNewAdministratorUsername(null);
-        setNewAdministratorPassword(null);
-        setNewAdministratorEmail(null);
-        setNewAdministratorName(null);
-       
+     newAdmin = new AdministratorDTO();  
     }
     
      public String updateAdministrator(){
         try{
             administratorBean.update(
-                    currentAdministrator.getUsername(), 
-                    currentAdministrator.getPassword(),
-                    currentAdministrator.getName(), 
-                    currentAdministrator.getEmail());
+                    currentAdmin.getUsername(), 
+                    currentAdmin.getPassword(),
+                    currentAdmin.getName(), 
+                    currentAdmin.getEmail());
             return "index?faces-redirect=true";
         
         }catch(Exception e){
@@ -112,9 +104,9 @@ public class AdministratorManager implements Serializable {
      
     public void removeAdministrator(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAdministratorId");
-            String id = param.getValue().toString();
-            administratorBean.removeAdministrator(id);
+            UIParameter param = (UIParameter) event.getComponent().findComponent("adminUsername");
+            String username = param.getValue().toString();
+            administratorBean.removeAdministrator(username);
         }catch(Exception e){
             logger.warning("Problem removing student in method removeStudent()");
         }
@@ -151,21 +143,6 @@ public class AdministratorManager implements Serializable {
         setNewProfissionalSaudeName(null);
        
     }
-    
-     public String updateProfissionalSaude(){
-        try{
-            administratorBean.update(
-                    currentAdministrator.getUsername(), 
-                    currentAdministrator.getPassword(),
-                    currentAdministrator.getName(), 
-                    currentAdministrator.getEmail());
-            return "index?faces-redirect=true";
-        
-        }catch(Exception e){
-            logger.warning("Problem uptading student in method updateAdministrator()");
-        }
-        return "admin_professionals_update";
-    }
      
     public void removeProfissionalSaude(ActionEvent event){
         try {
@@ -177,42 +154,6 @@ public class AdministratorManager implements Serializable {
         }
     }
     
-    public String getNewAdministratorUsername() {
-        return newAdministratorUsername;
-    }
-
-    public void setNewAdministratorUsername(String newAdministratorUsername) {
-        this.newAdministratorUsername = newAdministratorUsername;
-    }
-    
-    public String getNewAdministratorPassword() {
-        return newAdministratorPassword;
-    }
-
-    public void setNewAdministratorPassword(String newAdministratorPassword) {
-        this.newAdministratorPassword = newAdministratorPassword;
-    }
-    
-    public String getNewAdministratorEmail() {
-        return newAdministratorEmail;
-    }
-
-    public void setNewAdministratorEmail(String newAdministratorEmail) {
-        this.newAdministratorEmail = newAdministratorEmail;
-    }
-    
-    public String getNewAdministratorName() {
-        return newAdministratorName;
-    }
-
-    public void setNewAdministratorName(String newAdministratorName) {
-        this.newAdministratorName = newAdministratorName;
-    }
-    
-     public String getNewProfissionalSaudeUsername() {
-        return newAdministratorUsername;
-    }
-
     public void setNewProfissionalSaudeUsername(String newProfissionalSaudeUsername) {
         this.newProfissionalSaudeUsername = newProfissionalSaudeUsername;
     }
@@ -240,6 +181,23 @@ public class AdministratorManager implements Serializable {
     public void setNewProfissionalSaudeName(String newProfissionalSaudeName) {
         this.newProfissionalSaudeName = newProfissionalSaudeName;
     }
+
+    public AdministratorDTO getNewAdmin() {
+        return newAdmin;
+    }
+
+    public void setNewAdmin(AdministratorDTO newAdmin) {
+        this.newAdmin = newAdmin;
+    }
+
+    public AdministratorDTO getCurrentAdmin() {
+        return currentAdmin;
+    }
+
+    public void setCurrentAdmin(AdministratorDTO currentAdmin) {
+        this.currentAdmin = currentAdmin;
+    }
+    
     
     public UIComponent getComponent() {
         return component;
