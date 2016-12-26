@@ -6,7 +6,6 @@
 package ejbs;
 
 import dtos.ProfissionalSaudeDTO;
-import entities.Administrator;
 import entities.ProfissionalSaude;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;

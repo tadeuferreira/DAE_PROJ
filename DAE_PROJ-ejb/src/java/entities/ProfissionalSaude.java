@@ -8,9 +8,6 @@ package entities;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -25,17 +22,17 @@ import javax.persistence.NamedQuery;
 })
 public class ProfissionalSaude extends User implements Serializable {
 
-   // LinkedList<Cuidador> cuidadores;
+    LinkedList<Cuidador> cuidadores;
     
     public ProfissionalSaude() {
-        //this.cuidadores = new LinkedList();
+        this.cuidadores = new LinkedList();
     }
 
     public ProfissionalSaude(String username, String password, String name, String email) {
         super(username, password, name, email);
-       // this.cuidadores = new LinkedList();
+       this.cuidadores = new LinkedList();
     }
-/*
+
     public LinkedList<Cuidador> getCuidadores() {
         return cuidadores;
     }
@@ -51,5 +48,4 @@ public class ProfissionalSaude extends User implements Serializable {
     public void removeCuidador(Cuidador cuidador){
         this.cuidadores.addLast(cuidador);
     }
-    */
 }
