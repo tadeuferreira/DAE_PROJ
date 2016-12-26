@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,10 +18,14 @@ import javax.validation.constraints.NotNull;
  * @author brunoalexandredesousahenriques
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name= "findAllUtentes", 
+    query = "SELECT e FROM Utente e ORDER BY e.name")
+})
 public class Utente implements Serializable {
 
     @Id
-    private int code;
+    private String code;
     
     @NotNull
     private String name;
@@ -32,18 +38,18 @@ public class Utente implements Serializable {
       this.necessidades = new LinkedList();  
     }
     
-    public Utente(int code, String name){
+    public Utente(String code, String name){
        this.code = code;
        this.name = name;
        this.necessidades = new LinkedList();
        this.cuidadores = new LinkedList();
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

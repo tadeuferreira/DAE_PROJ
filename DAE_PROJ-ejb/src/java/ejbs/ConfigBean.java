@@ -30,6 +30,12 @@ public class ConfigBean {
     @EJB
     ProfissionalSaudeBean professionalBean;
     
+    @EJB
+    MaterialBean materialBean;
+    
+    @EJB
+    UtenteBean utenteBean;
+    
     @PostConstruct
     public void populateDB() {
     
@@ -52,8 +58,19 @@ public class ConfigBean {
            professionalBean.createProfissionalSaude("456466", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("454324", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("978907", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
-
-
+           
+           
+           materialBean.createMaterial("123456", "Pomada", "tipo 1", "20");
+           materialBean.createMaterial("456689", "Penso", "tipo 2", "45");
+           materialBean.createMaterial("234789", "Gotas", "tipo 3", "67");
+           materialBean.createMaterial("123890", "Desinfectante", "tipo 3", "34");
+           
+           
+           utenteBean.createUtente("678867", "Rogerio");
+           utenteBean.createUtente("978695", "Miguel");
+           utenteBean.createUtente("456372", "Joao");
+           utenteBean.createUtente("342534", "Maria");
+           utenteBean.createUtente("453983", "Isabel");
                     
        }catch (EntityAlreadyExistsException | EntityDoesNotExistException | MyConstraintViolationException e){
           System.err.println("Error:" + e.getMessage());

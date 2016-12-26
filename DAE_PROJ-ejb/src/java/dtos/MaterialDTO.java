@@ -13,17 +13,57 @@ import java.io.Serializable;
  */
 public class MaterialDTO implements Serializable {
      
+    protected String code;
+    protected String name;
+    protected String type;
+    protected String quantity;
+            
     public MaterialDTO(){
     
     }
 
     public MaterialDTO(
-            int code,
+            String code,
             String name,
             String type,
-            int quantity) {
+            String quantity) {
+        
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.quantity = quantity;
        
     }
     
-    
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 }

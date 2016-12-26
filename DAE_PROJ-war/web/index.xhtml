@@ -141,6 +141,122 @@
         
         <h:messages errorStyle="color: red" />
         
+        <br/>
+        <br/>
+        
+        <h:dataTable
+            var="material"
+            summary="List of all materials"
+            value="#{administratorManager.allMateriais}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Materials" />
+            </f:facet>            
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Code" />
+                </f:facet>
+                <h:outputText value="#{material.code}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{material.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Type" />
+                </f:facet>
+                <h:outputText value="#{material.type}" />
+            </h:column>                        
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="admin_materials_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="admin_materials_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeMaterial}">
+                        <f:param name="materialCode" id="materialCode" value="#{material.code}" />
+                    </h:commandLink>
+                </h:form>
+                
+            </h:column> 
+  
+        </h:dataTable>
+        <br/>
+        <h:form>
+            <h:commandLink value="New Material" action="admin_materials_create?faces-redirect=true"/>
+            </h:form>
+        
+        <br/>
+        <br/>
+        
+         <h:dataTable
+            var="utente"
+            summary="List of all utentes"
+            value="#{administratorManager.allUtentes}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Utentes" />
+            </f:facet>            
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Code" />
+                </f:facet>
+                <h:outputText value="#{utente.code}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{utente.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="admin_utentes_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="admin_utentes_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeUtente}">
+                        <f:param name="utenteCode" id="utenteCode" value="#{utente.code}" />
+                    </h:commandLink>
+                </h:form>
+                
+            </h:column> 
+  
+        </h:dataTable>
+        <br/>
+        <h:form>
+            <h:commandLink value="New Utente" action="admin_utentes_create?faces-redirect=true"/>
+            </h:form>
     </h:body>
 </html>
 

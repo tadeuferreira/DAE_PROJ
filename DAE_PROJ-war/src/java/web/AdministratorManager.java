@@ -7,10 +7,14 @@ package web;
 
 import dtos.AdministratorDTO;
 import dtos.CuidadorDTO;
+import dtos.MaterialDTO;
 import dtos.ProfissionalSaudeDTO;
+import dtos.UtenteDTO;
 import ejbs.AdministratorBean;
 import ejbs.CuidadorBean;
+import ejbs.MaterialBean;
 import ejbs.ProfissionalSaudeBean;
+import ejbs.UtenteBean;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
@@ -44,21 +48,29 @@ public class AdministratorManager implements Serializable {
     @EJB
     private ProfissionalSaudeBean profissionalSaudeBean;
 
-     @EJB
+    @EJB
     private CuidadorBean cuidadorBean;
+    
+    @EJB
+    private MaterialBean materialBean;
+    
+    @EJB
+    private UtenteBean utenteBean;
    
     private AdministratorDTO newAdmin;
     private ProfissionalSaudeDTO newProfissionalSaude;
+    private MaterialDTO newMaterial;
+    private CuidadorDTO newCuidador;
+    private UtenteDTO newUtente;
     
     private static final Logger LOGGER = Logger.getLogger("welcome");
     private static final Logger logger = Logger.getLogger("web.AdministratorManager");
     
     private AdministratorDTO currentAdmin;
     private ProfissionalSaudeDTO currentProfissionalSaude;
-
+    private MaterialDTO currentMaterial;
     private CuidadorDTO currentCuidador;
-    private CuidadorDTO newCuidador;
-
+    private UtenteDTO currentUtente;
     
     private UIComponent component;
     
@@ -67,6 +79,8 @@ public class AdministratorManager implements Serializable {
         this.newAdmin = new AdministratorDTO();
         this.newProfissionalSaude = new ProfissionalSaudeDTO();
         this.newCuidador = new CuidadorDTO();
+        this.newMaterial = new MaterialDTO();
+        this.newUtente = new UtenteDTO();
     }
     
     ///////CUIDADOR///////
@@ -179,6 +193,7 @@ public class AdministratorManager implements Serializable {
         }
     }
     
+    ///PROFISSIONAL DE SAUDE///
     public String createProfissionalSaude() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
             profissionalSaudeBean.createProfissionalSaude(newProfissionalSaude.getUsername(), newProfissionalSaude.getPassword(), newProfissionalSaude.getName(), newProfissionalSaude.getEmail());
@@ -225,15 +240,119 @@ public class AdministratorManager implements Serializable {
 
     public void removeProfissionalSaude(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteProfissionalSaudeId");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("professionalUsername");
             String id = param.getValue().toString();
             profissionalSaudeBean.removeProfissionalSaude(id);
         }catch(Exception e){
             logger.warning("Problem removing student in method removeProfissionalSaude()");
         }
     }
+    
+    ///MATERIAL///
+    public String createMaterial() throws EntityAlreadyExistsException, EntityDoesNotExistException{
+        try{
+            materialBean.createMaterial(newMaterial.getCode(), newMaterial.getName(), newMaterial.getType(), newMaterial.getQuantity());
+            clearNewMaterial();
+            return "index?faces-redirect=true";
+        }catch (EntityExistsException | EntityDoesNotExistException e){
+            FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
+            
+        }catch(Exception e){
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        }
+        return null;
+    }
+    
+    public List<MaterialDTO> getAllMateriais(){
+        try{
+            return materialBean.getAllMaterials();
+        }catch (Exception e){
+             LOGGER.warning("Error: problem in method getAllProfissionaisSaude");
+        }
+        return null;
+    }
+    
+    private void clearNewMaterial(){
+        newMaterial = new MaterialDTO();  
+    }
+    
+    public String updateMaterial(){
+        try{
+            materialBean.update(
+                    currentMaterial.getCode(), 
+                    currentMaterial.getName(),
+                    currentMaterial.getType(), 
+                    currentMaterial.getQuantity());
+            return "index?faces-redirect=true";
+        
+        }catch(Exception e){
+            logger.warning("Problem uptading material in method updateMaterial()");
+        }
+        return "admin_materials_update";
+    }
 
+    public void removeMaterial(ActionEvent event){
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
+            String id = param.getValue().toString();
+            materialBean.removeMaterial(id);
+        }catch(Exception e){
+            logger.warning("Problem removing student in method removeProfissionalSaude()");
+        }
+    }
+    
+    ///UTENTE///
+    public String createUtente() throws EntityAlreadyExistsException, EntityDoesNotExistException{
+        try{
+            utenteBean.createUtente(newUtente.getCode(), newUtente.getName());
+            clearNewUtente();
+            return "index?faces-redirect=true";
+        }catch (EntityExistsException | EntityDoesNotExistException e){
+            FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
+            
+        }catch(Exception e){
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        }
+        return null;
+    }
+    
+    public List<UtenteDTO> getAllUtentes(){
+        try{
+            return utenteBean.getAllUtentes();
+        }catch (Exception e){
+             LOGGER.warning("Error: problem in method getAllUtentes");
+        }
+        return null;
+    }
+    
+    private void clearNewUtente(){
+        newUtente = new UtenteDTO();  
+    }
+    
+    public String updateUtente(){
+        try{
+            utenteBean.update(
+                    currentUtente.getCode(), 
+                    currentUtente.getName()
+                    );
+            return "index?faces-redirect=true";
+        
+        }catch(Exception e){
+            logger.warning("Problem uptading utente in method updateUtente()");
+        }
+        return "admin_utentes_update";
+    }
 
+    public void removeUtente(ActionEvent event){
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("utenteCode");
+            String id = param.getValue().toString();
+            utenteBean.removeUtente(id);
+        }catch(Exception e){
+            logger.warning("Problem removing utente in method removeUtente()");
+        }
+    }
+    
     public AdministratorBean getAdministratorBean() {
         return administratorBean;
     }
@@ -283,6 +402,77 @@ public class AdministratorManager implements Serializable {
         this.currentProfissionalSaude = currentProfissionalSaude;
     }
 
+    public CuidadorBean getCuidadorBean() {
+        return cuidadorBean;
+    }
+
+    public void setCuidadorBean(CuidadorBean cuidadorBean) {
+        this.cuidadorBean = cuidadorBean;
+    }
+
+    public MaterialBean getMaterialBean() {
+        return materialBean;
+    }
+
+    public void setMaterialBean(MaterialBean materialBean) {
+        this.materialBean = materialBean;
+    }
+
+    public MaterialDTO getNewMaterial() {
+        return newMaterial;
+    }
+
+    public void setNewMaterial(MaterialDTO newMaterial) {
+        this.newMaterial = newMaterial;
+    }
+
+    public CuidadorDTO getNewCuidador() {
+        return newCuidador;
+    }
+
+    public void setNewCuidador(CuidadorDTO newCuidador) {
+        this.newCuidador = newCuidador;
+    }
+
+    public MaterialDTO getCurrentMaterial() {
+        return currentMaterial;
+    }
+
+    public void setCurrentMaterial(MaterialDTO currentMaterial) {
+        this.currentMaterial = currentMaterial;
+    }
+
+    public CuidadorDTO getCurrentCuidador() {
+        return currentCuidador;
+    }
+
+    public void setCurrentCuidador(CuidadorDTO currentCuidador) {
+        this.currentCuidador = currentCuidador;
+    }
+
+    public UtenteBean getUtenteBean() {
+        return utenteBean;
+    }
+
+    public void setUtenteBean(UtenteBean utenteBean) {
+        this.utenteBean = utenteBean;
+    }
+
+    public UtenteDTO getNewUtente() {
+        return newUtente;
+    }
+
+    public void setNewUtente(UtenteDTO newUtente) {
+        this.newUtente = newUtente;
+    }
+
+    public UtenteDTO getCurrentUtente() {
+        return currentUtente;
+    }
+
+    public void setCurrentUtente(UtenteDTO currentUtente) {
+        this.currentUtente = currentUtente;
+    }
    
     public UIComponent getComponent() {
         return component;

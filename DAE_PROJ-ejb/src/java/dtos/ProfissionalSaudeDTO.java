@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class ProfissionalSaudeDTO extends UserDTO implements Serializable {
     
-     public ProfissionalSaudeDTO(){
+    public ProfissionalSaudeDTO(){
     
     }
 
