@@ -40,31 +40,26 @@ public class AdministratorManager implements Serializable {
     
     @EJB
     private ProfissionalSaudeBean profissionalSaudeBean;
-    
-    private String newAdministratorUsername;
-    private String newAdministratorPassword;
-    private String newAdministratorEmail; 
-    private String newAdministratorName; 
-    
-    private String newProfissionalSaudeUsername;
-    private String newProfissionalSaudePassword;
-    private String newProfissionalSaudeEmail; 
-    private String newProfissionalSaudeName; 
+   
+    private AdministratorDTO newAdmin;
+    private ProfissionalSaudeDTO newProfissionalSaude;
     
     private static final Logger LOGGER = Logger.getLogger("welcome");
     private static final Logger logger = Logger.getLogger("web.AdministratorManager");
     
-    private AdministratorDTO currentAdministrator;
+    private AdministratorDTO currentAdmin;
+    private ProfissionalSaudeDTO currentProfissionalSaude;
     
     private UIComponent component;
     
     public AdministratorManager() {
-    
+        this.newAdmin = new AdministratorDTO();
+        this.newProfissionalSaude = new ProfissionalSaudeDTO();
     }
     
     public String createAdministrator() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            administratorBean.createAdministrator(newAdministratorUsername, newAdministratorPassword, newAdministratorName, newAdministratorEmail);
+            administratorBean.createAdministrator(newAdmin.getUsername(), newAdmin.getPassword(), newAdmin.getName(), newAdmin.getEmail());
             clearNewAdministrator();
             return "index?faces-redirect=true";
         }catch (EntityExistsException | EntityDoesNotExistException e){
@@ -86,22 +81,18 @@ public class AdministratorManager implements Serializable {
         return null;
     }
     
-     
     private void clearNewAdministrator(){
-        setNewAdministratorUsername(null);
-        setNewAdministratorPassword(null);
-        setNewAdministratorEmail(null);
-        setNewAdministratorName(null);
-       
+             newAdmin = new AdministratorDTO();  
+
     }
     
      public String updateAdministrator(){
         try{
             administratorBean.update(
-                    currentAdministrator.getUsername(), 
-                    currentAdministrator.getPassword(),
-                    currentAdministrator.getName(), 
-                    currentAdministrator.getEmail());
+                    currentAdmin.getUsername(), 
+                    currentAdmin.getPassword(),
+                    currentAdmin.getName(), 
+                    currentAdmin.getEmail());
             return "index?faces-redirect=true";
         
         }catch(Exception e){
@@ -122,7 +113,7 @@ public class AdministratorManager implements Serializable {
     
     public String createProfissionalSaude() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            profissionalSaudeBean.createProfissionalSaude(newProfissionalSaudeUsername, newProfissionalSaudePassword, newProfissionalSaudeName, newProfissionalSaudeEmail);
+            profissionalSaudeBean.createProfissionalSaude(newProfissionalSaude.getUsername(), newProfissionalSaude.getPassword(), newProfissionalSaude.getName(), newProfissionalSaude.getEmail());
             clearNewProfissionalSaude();
             return "index?faces-redirect=true";
         }catch (EntityExistsException | EntityDoesNotExistException e){
@@ -145,24 +136,20 @@ public class AdministratorManager implements Serializable {
     
      
     private void clearNewProfissionalSaude(){
-        setNewProfissionalSaudeUsername(null);
-        setNewProfissionalSaudePassword(null);
-        setNewProfissionalSaudeEmail(null);
-        setNewProfissionalSaudeName(null);
-       
+        newProfissionalSaude = new ProfissionalSaudeDTO();  
     }
     
      public String updateProfissionalSaude(){
         try{
-            administratorBean.update(
-                    currentAdministrator.getUsername(), 
-                    currentAdministrator.getPassword(),
-                    currentAdministrator.getName(), 
-                    currentAdministrator.getEmail());
+            profissionalSaudeBean.update(
+                    currentProfissionalSaude.getUsername(), 
+                    currentProfissionalSaude.getPassword(),
+                    currentProfissionalSaude.getName(), 
+                    currentProfissionalSaude.getEmail());
             return "index?faces-redirect=true";
         
         }catch(Exception e){
-            logger.warning("Problem uptading student in method updateAdministrator()");
+            logger.warning("Problem uptading student in method updateProsissionalSaude()");
         }
         return "admin_professionals_update";
     }
@@ -176,69 +163,53 @@ public class AdministratorManager implements Serializable {
             logger.warning("Problem removing student in method removeProfissionalSaude()");
         }
     }
-    
-    public String getNewAdministratorUsername() {
-        return newAdministratorUsername;
+
+    public AdministratorBean getAdministratorBean() {
+        return administratorBean;
     }
 
-    public void setNewAdministratorUsername(String newAdministratorUsername) {
-        this.newAdministratorUsername = newAdministratorUsername;
-    }
-    
-    public String getNewAdministratorPassword() {
-        return newAdministratorPassword;
+    public void setAdministratorBean(AdministratorBean administratorBean) {
+        this.administratorBean = administratorBean;
     }
 
-    public void setNewAdministratorPassword(String newAdministratorPassword) {
-        this.newAdministratorPassword = newAdministratorPassword;
-    }
-    
-    public String getNewAdministratorEmail() {
-        return newAdministratorEmail;
+    public ProfissionalSaudeBean getProfissionalSaudeBean() {
+        return profissionalSaudeBean;
     }
 
-    public void setNewAdministratorEmail(String newAdministratorEmail) {
-        this.newAdministratorEmail = newAdministratorEmail;
-    }
-    
-    public String getNewAdministratorName() {
-        return newAdministratorName;
+    public void setProfissionalSaudeBean(ProfissionalSaudeBean profissionalSaudeBean) {
+        this.profissionalSaudeBean = profissionalSaudeBean;
     }
 
-    public void setNewAdministratorName(String newAdministratorName) {
-        this.newAdministratorName = newAdministratorName;
-    }
-    
-     public String getNewProfissionalSaudeUsername() {
-        return newAdministratorUsername;
+    public AdministratorDTO getNewAdmin() {
+        return newAdmin;
     }
 
-    public void setNewProfissionalSaudeUsername(String newProfissionalSaudeUsername) {
-        this.newProfissionalSaudeUsername = newProfissionalSaudeUsername;
-    }
-    
-    public String getNewProfissionalSaudePassword() {
-        return newProfissionalSaudePassword;
+    public void setNewAdmin(AdministratorDTO newAdmin) {
+        this.newAdmin = newAdmin;
     }
 
-    public void setNewProfissionalSaudePassword(String newProfissionalSaudePassword) {
-        this.newProfissionalSaudePassword = newProfissionalSaudePassword;
-    }
-    
-    public String getNewProfissionalSaudeEmail() {
-        return newProfissionalSaudeEmail;
+    public ProfissionalSaudeDTO getNewProfissionalSaude() {
+        return newProfissionalSaude;
     }
 
-    public void setNewProfissionalSaudeEmail(String newProfissionalSaudeEmail) {
-        this.newProfissionalSaudeEmail = newProfissionalSaudeEmail;
-    }
-    
-    public String getNewProfissionalSaudeName() {
-        return newProfissionalSaudeName;
+    public void setNewProfissionalSaude(ProfissionalSaudeDTO newProfissionalSaude) {
+        this.newProfissionalSaude = newProfissionalSaude;
     }
 
-    public void setNewProfissionalSaudeName(String newProfissionalSaudeName) {
-        this.newProfissionalSaudeName = newProfissionalSaudeName;
+    public AdministratorDTO getCurrentAdmin() {
+        return currentAdmin;
+    }
+
+    public void setCurrentAdmin(AdministratorDTO currentAdmin) {
+        this.currentAdmin = currentAdmin;
+    }
+
+    public ProfissionalSaudeDTO getCurrentProfissionalSaude() {
+        return currentProfissionalSaude;
+    }
+
+    public void setCurrentProfissionalSaude(ProfissionalSaudeDTO currentProfissionalSaude) {
+        this.currentProfissionalSaude = currentProfissionalSaude;
     }
     
     public UIComponent getComponent() {

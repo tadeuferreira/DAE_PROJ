@@ -6,6 +6,7 @@
 package ejbs;
 
 import dtos.AdministratorDTO;
+import dtos.ProfissionalSaudeDTO;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
@@ -26,6 +27,9 @@ public class ConfigBean {
     @EJB
     AdministratorBean administratorBean;
     
+    @EJB
+    ProfissionalSaudeBean professionalBean;
+    
     @PostConstruct
     public void populateDB() {
     
@@ -35,8 +39,22 @@ public class ConfigBean {
            administratorBean.createAdministrator("232323", "Rodrigo", "Rodrigo", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("343434", "Fernando", "Fernando", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("454545", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
-          
-      
+           administratorBean.createAdministrator("676767", "Carlos", "Carlos", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("898989", "Henrique", "Henrique", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("567567", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("123123", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
+           
+           
+           professionalBean.createProfissionalSaude("567456", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("456456", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("786788", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("243554", "Carlos", "Carlos", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("456466", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("454324", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
+           professionalBean.createProfissionalSaude("978907", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
+
+
+                    
        }catch (EntityAlreadyExistsException | EntityDoesNotExistException | MyConstraintViolationException e){
           System.err.println("Error:" + e.getMessage());
        }
@@ -47,5 +65,6 @@ public class ConfigBean {
            administrators.forEach((a) -> {
                System.out.println(a);
         });  
+           
     }    
 }

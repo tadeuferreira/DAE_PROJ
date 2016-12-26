@@ -73,6 +73,74 @@
         
         <h:messages errorStyle="color: red" />
         
+        <br/>
+        <br/>
+        
+        <h:dataTable
+            var="professional"
+            summary="List of all professionals"
+            value="#{administratorManager.allProfessionaisSaude}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Profissionais de Saude" />
+            </f:facet>             
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Username" />
+                </f:facet>
+                <h:outputText value="#{professional.username}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{professional.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{professional.email}" />
+            </h:column> 
+             
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="admin_professionals_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentProfissionalSaude}" value="#{professional}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="admin_professionals_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentProfissionalSaude}" value="#{professional}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeProfissionalSaude}">
+                        <f:param name="professionalUsername" id="professionalUsername" value="#{professional.username}" />
+                    </h:commandLink>
+                </h:form>
+            </h:column>                        
+
+        </h:dataTable>
+        
+        <br/>
+        <br/>
+        
+        <h:form>
+            <h:commandLink value="New Profissional de Saude" action="admin_professionals_create?faces-redirect=true"/>
+        </h:form>
+        
+        <br/>
+        
+        <h:messages errorStyle="color: red" />
+        
     </h:body>
 </html>
 
