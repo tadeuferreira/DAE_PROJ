@@ -6,11 +6,14 @@
 package web;
 
 import dtos.AdministratorDTO;
+import dtos.CuidadorDTO;
 import dtos.ProfissionalSaudeDTO;
 import ejbs.AdministratorBean;
+import ejbs.CuidadorBean;
 import ejbs.ProfissionalSaudeBean;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
+import exceptions.MyConstraintViolationException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,6 +43,9 @@ public class AdministratorManager implements Serializable {
     
     @EJB
     private ProfissionalSaudeBean profissionalSaudeBean;
+
+     @EJB
+    private CuidadorBean cuidadorBean;
    
     private AdministratorDTO newAdmin;
     private ProfissionalSaudeDTO newProfissionalSaude;
@@ -49,14 +55,76 @@ public class AdministratorManager implements Serializable {
     
     private AdministratorDTO currentAdmin;
     private ProfissionalSaudeDTO currentProfissionalSaude;
+
+    private CuidadorDTO currentCuidador;
+    private CuidadorDTO newCuidador;
+
     
     private UIComponent component;
     
     public AdministratorManager() {
+
         this.newAdmin = new AdministratorDTO();
         this.newProfissionalSaude = new ProfissionalSaudeDTO();
+        this.newCuidador = new CuidadorDTO();
     }
     
+    ///////CUIDADOR///////
+    public String createCuidador() {
+        try {
+            cuidadorBean.create(
+                    newCuidador.getUsername(),
+                    newCuidador.getPassword(),
+                    newCuidador.getName(),
+                    newCuidador.getEmail());
+            newCuidador.reset();
+            return "index?faces-redirect=true";
+        } catch (EntityAlreadyExistsException | EntityDoesNotExistException | MyConstraintViolationException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        }
+        return null;
+    }
+   
+    public List<CuidadorDTO> getAllCuidadores() {
+        try {
+            return cuidadorBean.getAllCuidadores();
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return null;
+    }
+
+    public String updateCuidador() {
+        try {
+            cuidadorBean.update(
+                    currentCuidador.getUsername(),
+                    currentCuidador.getPassword(),
+                    currentCuidador.getName(),
+                    currentCuidador.getEmail());
+            return "index?faces-redirect=true";
+        } catch (EntityDoesNotExistException | MyConstraintViolationException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return "prof_cuidadores_update";
+    }
+
+    public void removeCuidador(ActionEvent event) {
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("cuidadorUsername");
+            String id = param.getValue().toString();
+            cuidadorBean.remove(id);
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+    }
+    
+   ///////ADMIN///////
     public String createAdministrator() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
             administratorBean.createAdministrator(newAdmin.getUsername(), newAdmin.getPassword(), newAdmin.getName(), newAdmin.getEmail());
@@ -80,10 +148,10 @@ public class AdministratorManager implements Serializable {
         }
         return null;
     }
-    
-    private void clearNewAdministrator(){
-             newAdmin = new AdministratorDTO();  
 
+    private void clearNewAdministrator(){
+
+             newAdmin = new AdministratorDTO(); 
     }
     
      public String updateAdministrator(){
@@ -103,9 +171,9 @@ public class AdministratorManager implements Serializable {
      
     public void removeAdministrator(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAdministratorId");
-            String id = param.getValue().toString();
-            administratorBean.removeAdministrator(id);
+            UIParameter param = (UIParameter) event.getComponent().findComponent("adminUsername");
+            String username = param.getValue().toString();
+            administratorBean.removeAdministrator(username);
         }catch(Exception e){
             logger.warning("Problem removing student in method removeStudent()");
         }
@@ -138,6 +206,7 @@ public class AdministratorManager implements Serializable {
     private void clearNewProfissionalSaude(){
         newProfissionalSaude = new ProfissionalSaudeDTO();  
     }
+
     
      public String updateProfissionalSaude(){
         try{
@@ -153,7 +222,7 @@ public class AdministratorManager implements Serializable {
         }
         return "admin_professionals_update";
     }
-     
+
     public void removeProfissionalSaude(ActionEvent event){
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("deleteProfissionalSaudeId");
@@ -163,6 +232,7 @@ public class AdministratorManager implements Serializable {
             logger.warning("Problem removing student in method removeProfissionalSaude()");
         }
     }
+
 
     public AdministratorBean getAdministratorBean() {
         return administratorBean;
@@ -187,7 +257,8 @@ public class AdministratorManager implements Serializable {
     public void setNewAdmin(AdministratorDTO newAdmin) {
         this.newAdmin = newAdmin;
     }
-
+    
+    
     public ProfissionalSaudeDTO getNewProfissionalSaude() {
         return newProfissionalSaude;
     }
@@ -211,7 +282,8 @@ public class AdministratorManager implements Serializable {
     public void setCurrentProfissionalSaude(ProfissionalSaudeDTO currentProfissionalSaude) {
         this.currentProfissionalSaude = currentProfissionalSaude;
     }
-    
+
+   
     public UIComponent getComponent() {
         return component;
     }

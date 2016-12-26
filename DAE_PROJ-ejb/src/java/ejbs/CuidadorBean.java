@@ -30,7 +30,7 @@ public class CuidadorBean {
     @PersistenceContext
     private EntityManager em;
     
-    public void createCuidador(String username, String password, String name, String email) 
+    public void create(String username, String password, String name, String email) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
         
         try{  
@@ -54,25 +54,40 @@ public class CuidadorBean {
         }
     }
     
-    public void removeCuidador(String username) {
-        try{
+    public void remove(String username) throws EntityDoesNotExistException {
+        try {
             Cuidador cuidador = em.find(Cuidador.class, username);
-            em.remove(cuidador);
+            if (cuidador == null) {
+                throw new EntityDoesNotExistException("There is no student with that username.");
+            }
             
+            em.remove(cuidador);
+        
+        } catch (EntityDoesNotExistException e) {
+            throw e;
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
     }
     
-    public void update(String username, String password, String name, String email) {
-        try{
+    public void update(String username, String password, String name, String email) 
+        throws EntityDoesNotExistException, MyConstraintViolationException{
+        try {
             Cuidador cuidador = em.find(Cuidador.class, username);
-            if(cuidador == null){
-                return;
+            if (cuidador == null) {
+                throw new EntityDoesNotExistException("There is no student with that username.");
             }
+
+            cuidador.setPassword(password);
             cuidador.setName(name);
+            cuidador.setEmail(email);
             em.merge(cuidador);
-        }catch(Exception e){
+            
+        } catch (EntityDoesNotExistException e) {
+            throw e;
+        } catch (ConstraintViolationException e) {
+            throw new MyConstraintViolationException(Utils.getConstraintViolationMessages(e));            
+        } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
     }

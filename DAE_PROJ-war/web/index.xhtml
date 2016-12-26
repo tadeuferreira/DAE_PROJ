@@ -54,7 +54,7 @@
                         <f:setPropertyActionListener target="#{administratorManager.currentAdmin}" value="#{admin}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeAdminstrator}">
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeAdministrator}">
                         <f:param name="adminUsername" id="adminUsername" value="#{admin.username}" />
                     </h:commandLink>
                 </h:form>
@@ -66,7 +66,7 @@
         <br/>
         
         <h:form>
-            <h:commandLink value="New Admin" action="admin_adminss_create?faces-redirect=true"/>
+            <h:commandLink value="New Admin" action="admin_admins_create?faces-redirect=true"/>
         </h:form>
         
         <br/>
