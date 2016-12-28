@@ -28,6 +28,52 @@
         
         <br/>        
 
+         <br/>        
+
+        <h:dataTable
+            var="material"
+            summary="List of all Cuidadores materiais"
+            value="#{administratorManager.currentCuidadorMateriais}"
+            rules="all"
+            cellpadding="5">
+
+            <f:facet name="header">
+                <h:outputText value="Cuidadores Materiais" />
+            </f:facet>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Code" />
+                    </f:facet>
+                    <h:outputText value="#{material.code}" />
+                    <!--Falta validar o formato-->
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name" />
+                    </f:facet>
+                    <h:outputText value="#{material.name}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Type" />
+                    </f:facet>
+                    <h:outputText value="#{material.type}" />
+                </h:column>                        
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Quantity" />
+                    </f:facet>
+                    <h:outputText value="#{material.quantity}" />
+                </h:column>                        
+
+        </h:dataTable>
+
+        <br/>
+        
         <h:form>                  
             <h:commandLink
                 id="return"

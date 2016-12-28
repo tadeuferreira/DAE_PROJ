@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
@@ -25,20 +28,26 @@ import javax.validation.constraints.NotNull;
 public class Material implements Serializable {
 
     @Id
-    private String code;
+    private int code;
     @NotNull
     private String name;  
     @NotNull
     private String type;
     private String quantity;
     
+    @ManyToMany
+    @JoinTable(name = "MATERIAL_CUIDADOR",
+            joinColumns
+            = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"),
+            inverseJoinColumns
+            = @JoinColumn(name = "CUIDADOR_USERNAME", referencedColumnName = "USERNAME"))
     LinkedList<Cuidador> cuidadores;
     
     public Material(){
         this.cuidadores = new LinkedList();
     }
     
-    public Material(String code, String name, String type, String quantity){
+    public Material(int code, String name, String type, String quantity){
         this.code = code;
         this.name = name;
         this.type = type;
@@ -47,11 +56,11 @@ public class Material implements Serializable {
         this.cuidadores = new LinkedList();
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

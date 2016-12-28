@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -22,29 +23,28 @@ import javax.persistence.NamedQuery;
 })
 public class Cuidador extends User implements Serializable {
 
+    @ManyToMany(mappedBy = "cuidadores")
     LinkedList<Material> materials;
-    LinkedList<ProfissionalSaude> profissionais;
+    
     LinkedList<Utente> utentes;
     
     public Cuidador(){
         this.materials = new LinkedList();
-        this.profissionais = new LinkedList();
         this.utentes = new LinkedList();
     }
     
     public Cuidador(String username, String password, String name, String email){
         super(username, password, name, email);
         this.materials = new LinkedList();
-        this.profissionais = new LinkedList();
         this.utentes = new LinkedList();
     }
 
     public void addMaterial(Material material){
-        this.materials.addLast(material);
+        this.materials.add(material);
     }
     
     public void removeMaterial(Material material){
-        this.materials.addLast(material);
+        this.materials.remove(material);
     }
 
     public LinkedList<Material> getMaterials() {
@@ -53,22 +53,6 @@ public class Cuidador extends User implements Serializable {
 
     public void setMaterials(LinkedList<Material> materials) {
         this.materials = materials;
-    }
-
-    public LinkedList<ProfissionalSaude> getProfissionais() {
-        return profissionais;
-    }
-
-    public void setProfissionais(LinkedList<ProfissionalSaude> profissionais) {
-        this.profissionais = profissionais;
-    }
-    
-    public void addProfissional(ProfissionalSaude profissional){
-        this.profissionais.addLast(profissional);
-    }
-    
-    public void removeProfissional(ProfissionalSaude profissional){
-        this.profissionais.remove(profissional);
     }
 
     public LinkedList<Utente> getUtentes() {
@@ -80,7 +64,7 @@ public class Cuidador extends User implements Serializable {
     }
       
     public void addUtente(Utente utente){
-        this.utentes.addLast(utente);
+        this.utentes.add(utente);
     }
     
     public void removeUtente(Utente utente){
