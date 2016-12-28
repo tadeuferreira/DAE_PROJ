@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
@@ -32,6 +35,12 @@ public class Material implements Serializable {
     private String type;
     private String quantity;
     
+    @ManyToMany
+    @JoinTable(name = "MATERIAL_CUIDADOR",
+            joinColumns
+            = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"),
+            inverseJoinColumns
+            = @JoinColumn(name = "CUIDADOR_USERNAME", referencedColumnName = "USERNAME"))
     LinkedList<Cuidador> cuidadores;
     
     public Material(){

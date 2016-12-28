@@ -6,7 +6,6 @@
 package ejbs;
 
 import dtos.AdministratorDTO;
-import dtos.ProfissionalSaudeDTO;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
@@ -45,14 +44,14 @@ public class ConfigBean {
     
         try{
           
-           administratorBean.createAdministrator("121212", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("232323", "Rodrigo", "Rodrigo", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("343434", "Fernando", "Fernando", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("454545", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("676767", "Carlos", "Carlos", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("898989", "Henrique", "Henrique", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("567567", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
-           administratorBean.createAdministrator("123123", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("1212121", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("2323232", "Rodrigo", "Rodrigo", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("3434343", "Fernando", "Fernando", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("4545454", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("6767675", "Carlos", "Carlos", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("8989896", "Henrique", "Henrique", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("5675677", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
+           administratorBean.createAdministrator("1231238", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
            
            
            professionalBean.createProfissionalSaude("567456", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");

@@ -145,6 +145,73 @@
         <br/>
         
         <h:dataTable
+            var="cuidador"
+            summary="List of all cuidadores"
+            value="#{administratorManager.allCuidadores}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Cuidadores" />
+            </f:facet>             
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Username" />
+                </f:facet>
+                <h:outputText value="#{cuidador.username}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{cuidador.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{cuidador.email}" />
+            </h:column> 
+             
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="prof_cuidadores_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="prof_cuidadores_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeCuidador}">
+                        <f:param name="cuidadorUsername" id="cuidadorUsername" value="#{cuidador.username}" />
+                    </h:commandLink>
+                </h:form>
+            </h:column>                        
+
+        </h:dataTable>
+        
+        <br/>
+        <br/>
+        
+        <h:form>
+            <h:commandLink value="New Cuidador" action="admin_cuidadores_create?faces-redirect=true"/>
+        </h:form>
+        
+        <br/>
+        
+        <h:messages errorStyle="color: red" />
+        
+        <br/>
+        <br/>
+        <h:dataTable
             var="material"
             summary="List of all materials"
             value="#{administratorManager.allMateriais}"
@@ -259,4 +326,3 @@
             </h:form>
     </h:body>
 </html>
-

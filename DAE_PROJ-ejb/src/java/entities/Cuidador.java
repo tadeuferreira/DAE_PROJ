@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -22,6 +23,7 @@ import javax.persistence.NamedQuery;
 })
 public class Cuidador extends User implements Serializable {
 
+    @ManyToMany(mappedBy = "cuidadores")
     LinkedList<Material> materials;
     
     LinkedList<Utente> utentes;
