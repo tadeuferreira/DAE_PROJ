@@ -64,10 +64,10 @@ public class ConfigBean {
            professionalBean.createProfissionalSaude("978907", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
           
 
-           materialBean.createMaterial("123456", "Pomada", "tipo 1", "20");
-           materialBean.createMaterial("456689", "Penso", "tipo 2", "45");
-           materialBean.createMaterial("234789", "Gotas", "tipo 3", "67");
-           materialBean.createMaterial("123890", "Desinfectante", "tipo 3", "34");
+           materialBean.createMaterial(123456, "Pomada", "tipo 1", "20");
+           materialBean.createMaterial(456689, "Penso", "tipo 2", "45");
+           materialBean.createMaterial(234789, "Gotas", "tipo 3", "67");
+           materialBean.createMaterial(123890, "Desinfectante", "tipo 3", "34");
            
            
            utenteBean.createUtente("678867", "Rogerio");

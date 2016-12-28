@@ -7,7 +7,6 @@ package ejbs;
 
 import dtos.CuidadorDTO;
 import entities.Cuidador;
-import entities.ProfissionalSaude;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
@@ -126,29 +125,7 @@ public class CuidadorBean {
         return dtos;
     }
     
-    public void enrollCuidadorInProfissionalSaude(String name, String username){
-        try{
-            ProfissionalSaude profissional = em.find(ProfissionalSaude.class, username);
-            if(profissional == null){
-                return;
-            }
-            
-            Cuidador cuidador = em.find(Cuidador.class, name);
-            if(cuidador == null){
-                return;
-            }
-            
-            if(cuidador.getProfissionais().contains(profissional)){
-                return;
-            }
-            
-            cuidador.addProfissional(profissional);
-            profissional.addCuidador(cuidador);
-            
-        }catch(Exception e){
-            throw new EJBException(e.getMessage());
-        }
-    }
+    
     
 }
 

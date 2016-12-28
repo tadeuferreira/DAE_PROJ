@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
 public class Material implements Serializable {
 
     @Id
-    private String code;
+    private int code;
     @NotNull
     private String name;  
     @NotNull
@@ -38,7 +38,7 @@ public class Material implements Serializable {
         this.cuidadores = new LinkedList();
     }
     
-    public Material(String code, String name, String type, String quantity){
+    public Material(int code, String name, String type, String quantity){
         this.code = code;
         this.name = name;
         this.type = type;
@@ -47,11 +47,11 @@ public class Material implements Serializable {
         this.cuidadores = new LinkedList();
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

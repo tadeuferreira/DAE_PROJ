@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class MaterialDTO implements Serializable {
      
-    protected String code;
+    protected int code;
     protected String name;
     protected String type;
     protected String quantity;
@@ -23,7 +23,7 @@ public class MaterialDTO implements Serializable {
     }
 
     public MaterialDTO(
-            String code,
+            int code,
             String name,
             String type,
             String quantity) {
@@ -35,11 +35,11 @@ public class MaterialDTO implements Serializable {
        
     }
     
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
