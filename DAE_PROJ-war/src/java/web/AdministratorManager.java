@@ -473,7 +473,7 @@ public class AdministratorManager implements Serializable {
     public void setCurrentUtente(UtenteDTO currentUtente) {
         this.currentUtente = currentUtente;
     }
-   
+
     public UIComponent getComponent() {
         return component;
     }
