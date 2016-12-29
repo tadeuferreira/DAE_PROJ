@@ -312,6 +312,41 @@ public class AdministratorManager implements Serializable {
         }
     }
     
+    public List<MaterialDTO> getUnrolledMaterials() {
+        try {
+            return materialBean.getUnrolledMaterials(currentCuidador.getUsername());
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return null;
+    }
+
+    public void enrollMaterial(ActionEvent event) {
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
+            int code = Integer.parseInt(param.getValue().toString());
+            materialBean.associateMaterialtoCuidador(currentCuidador.getUsername(), code);
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+    }
+
+    public void unrollMaterial(ActionEvent event) {
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
+            int code = Integer.parseInt(param.getValue().toString());
+            materialBean.unrollMaterial(currentCuidador.getUsername(), code);
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+    }
+    
     ///UTENTE///
     public String createUtente() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{

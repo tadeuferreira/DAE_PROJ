@@ -12,6 +12,7 @@ import exceptions.CuidadorAssociatedException;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MaterialAssociatedException;
+import exceptions.MaterialNotEnrolledException;
 import exceptions.MyConstraintViolationException;
 import exceptions.Utils;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import javax.validation.ConstraintViolationException;
  *
  * @author brunoalexandredesousahenriques
  */
+
 @Stateless
 public class MaterialBean {
 
@@ -52,7 +54,6 @@ public class MaterialBean {
            throw new EJBException (e.getMessage());
         }
     }
-    
     
     public void removeMaterial(int code) {
         try{
@@ -111,7 +112,7 @@ public class MaterialBean {
         return dtos;
     }
     
-    public void associateCuidadorToMaterial(String username, int materialCode)
+    public void associateMaterialtoCuidador(String username, int materialCode)
             throws EntityDoesNotExistException, CuidadorAssociatedException, MaterialAssociatedException{
         try {
 
@@ -141,13 +142,14 @@ public class MaterialBean {
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-    }
+    } 
+ 
     
     public List<MaterialDTO> getAssociatedMateriais(String username) throws EntityDoesNotExistException{
         try {
             Cuidador cuidador = em.find(Cuidador.class, username);
             if( cuidador == null){
-                throw new EntityDoesNotExistException("There is no cuidador with that code.");
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
             }            
             List<Material> materials = (List<Material>) cuidador.getMaterials();
             return materialsToDTOs(materials);
@@ -157,4 +159,52 @@ public class MaterialBean {
             throw new EJBException(e.getMessage());
         }
     }
+    
+    public void unrollMaterial(String username, int materialCode) 
+            throws EntityDoesNotExistException, MaterialNotEnrolledException {
+        try {
+            Material material = em.find(Material.class, materialCode);
+            if(material == null){
+                throw new EntityDoesNotExistException("There is no material with that code.");
+            }            
+            
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if(cuidador == null){
+                throw new EntityDoesNotExistException("There is no student with that username.");
+            }
+            
+            if(!cuidador.getMaterials().contains(material)){
+                throw new MaterialNotEnrolledException();
+            }            
+            
+            cuidador.removeMaterial(material);
+            material.removeCuidador(cuidador);
+
+        } catch (EntityDoesNotExistException | MaterialNotEnrolledException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public List<MaterialDTO> getUnrolledMaterials(String username) throws EntityDoesNotExistException{
+        try {
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if( cuidador == null){
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
+            }            
+            List<MaterialDTO> materiais = this.getAllMaterials();
+            List<Material> enrolled = em.find(Cuidador.class, username).getMaterials();
+            materiais.removeAll(materialsToDTOs(enrolled));
+            return materiais;
+        } catch (EntityDoesNotExistException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    
+    
+    
 }

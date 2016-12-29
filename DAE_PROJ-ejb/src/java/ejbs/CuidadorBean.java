@@ -6,9 +6,13 @@
 package ejbs;
 
 import dtos.CuidadorDTO;
+import dtos.MaterialDTO;
 import entities.Cuidador;
+import entities.Material;
+import exceptions.CuidadorAssociatedException;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
+import exceptions.MaterialAssociatedException;
 import exceptions.MyConstraintViolationException;
 import exceptions.Utils;
 import java.util.ArrayList;
@@ -124,7 +128,7 @@ public class CuidadorBean {
         }
         return dtos;
     }
-    
+
     
     
 }
