@@ -109,6 +109,8 @@ public class AdministratorManager implements Serializable {
         }
         return null;
     }
+    
+    
 
     public String updateCuidador() {
         try {
@@ -294,10 +296,54 @@ public class AdministratorManager implements Serializable {
     public void removeMaterial(ActionEvent event){
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            String id = param.getValue().toString();
+            int id = Integer.parseInt(param.getValue().toString());
             materialBean.removeMaterial(id);
         }catch(Exception e){
-            logger.warning("Problem removing student in method removeProfissionalSaude()");
+            logger.warning("Problem removing material in method removeMaterial()");
+        }
+    }
+    
+    public List<MaterialDTO> getCurrentCuidadorMateriais() {
+        try {
+            return materialBean.getAssociatedMateriais(currentCuidador.getUsername());
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+            return null;
+        }
+    }
+    
+    public List<MaterialDTO> getUnrolledMaterials() {
+        try {
+            return materialBean.getUnrolledMaterials(currentCuidador.getUsername());
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return null;
+    }
+
+    public void enrollMaterial(ActionEvent event) {
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
+            int code = Integer.parseInt(param.getValue().toString());
+            materialBean.associateMaterialtoCuidador(currentCuidador.getUsername(), code);
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+    }
+
+    public void unrollMaterial(ActionEvent event) {
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
+            int code = Integer.parseInt(param.getValue().toString());
+            materialBean.unrollMaterial(currentCuidador.getUsername(), code);
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }
     

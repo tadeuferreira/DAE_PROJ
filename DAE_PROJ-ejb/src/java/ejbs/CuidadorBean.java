@@ -6,10 +6,13 @@
 package ejbs;
 
 import dtos.CuidadorDTO;
+import dtos.MaterialDTO;
 import entities.Cuidador;
-import entities.ProfissionalSaude;
+import entities.Material;
+import exceptions.CuidadorAssociatedException;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
+import exceptions.MaterialAssociatedException;
 import exceptions.MyConstraintViolationException;
 import exceptions.Utils;
 import java.util.ArrayList;
@@ -125,30 +128,8 @@ public class CuidadorBean {
         }
         return dtos;
     }
+
     
-    public void enrollCuidadorInProfissionalSaude(String name, String username){
-        try{
-            ProfissionalSaude profissional = em.find(ProfissionalSaude.class, username);
-            if(profissional == null){
-                return;
-            }
-            
-            Cuidador cuidador = em.find(Cuidador.class, name);
-            if(cuidador == null){
-                return;
-            }
-            
-            if(cuidador.getProfissionais().contains(profissional)){
-                return;
-            }
-            
-            cuidador.addProfissional(profissional);
-            profissional.addCuidador(cuidador);
-            
-        }catch(Exception e){
-            throw new EJBException(e.getMessage());
-        }
-    }
     
 }
 
