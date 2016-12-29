@@ -5,6 +5,7 @@
  */
 package entities;
 
+import entities.UserGroup.GROUP;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
@@ -33,7 +34,7 @@ public class Cuidador extends User implements Serializable {
     }
     
     public Cuidador(String username, String password, String name, String email){
-        super(username, password, name, email);
+        super(username, password, GROUP.Cuidador,name, email);
         this.materials = new LinkedList();
         this.profissionais = new LinkedList();
         this.utentes = new LinkedList();

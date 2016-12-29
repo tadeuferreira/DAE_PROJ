@@ -5,6 +5,7 @@
  */
 package entities;
 
+import entities.UserGroup.GROUP;
 import java.io.Serializable;
 import java.util.LinkedList;
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class ProfissionalSaude extends User implements Serializable {
     }
 
     public ProfissionalSaude(String username, String password, String name, String email) {
-        super(username, password, name, email);
+        super(username, password,GROUP.Professional, name, email);
        this.cuidadores = new LinkedList();
     }
 

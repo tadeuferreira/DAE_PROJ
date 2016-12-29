@@ -44,7 +44,8 @@ public class ConfigBean {
     public void populateDB() {
     
         try{
-          
+           administratorBean.createAdministrator("a1", "a1", "a1", "a1@a1.com");
+           administratorBean.createAdministrator("admin", "admin", "admin", "admin@admin.com");
            administratorBean.createAdministrator("121212", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("232323", "Rodrigo", "Rodrigo", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("343434", "Fernando", "Fernando", "dae.ei.ipleiria@gmail.com");
@@ -54,7 +55,7 @@ public class ConfigBean {
            administratorBean.createAdministrator("567567", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("123123", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
            
-           
+           professionalBean.createProfissionalSaude("p1", "p1", "p1", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("567456", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("456456", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("786788", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
