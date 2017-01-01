@@ -54,8 +54,7 @@ public class ConfigBean {
            administratorBean.createAdministrator("8989896", "Henrique", "Henrique", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("5675677", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            administratorBean.createAdministrator("1231238", "Miguel", "Miguel", "dae.ei.ipleiria@gmail.com");
-           
-           
+
            professionalBean.createProfissionalSaude("p1", "p1", "p1", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("567456", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("456456", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
