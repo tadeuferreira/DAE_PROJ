@@ -45,18 +45,18 @@ public class UserManager implements Serializable {
         } catch (ServletException e) {
             System.out.println("exception");
             logger.log(Level.WARNING, e.getMessage());
-            return "error?faces-redirect=true";
+            return "/error?faces-redirect=true";
         }
+        System.out.println("LOGIN!");
         if(isUserInRole("Administrator")){
+            System.out.println("ADMIN!");
             return "/faces/admin/admin_index?faces-redirect=true";
         }
         if(isUserInRole("Professional")){
+            System.out.println("Pro!");
             return "/faces/professional/professional_index?faces-redirect=true";
         }
-       /* if(isUserInRole("Teacher")){
-            return "/faces/teacher/teacher_list_subjects?faces-redirect=true";
-        }*/
-        return "error?faces-redirect=true";
+        return "/error?faces-redirect=true";
     }
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -75,7 +75,7 @@ public class UserManager implements Serializable {
         if(isSomeUserAuthenticated()){
             logout();
         }
-        return "index_login.xhtml?faces-redirect=true";
+        return "/index_login.xhtml?faces-redirect=true";
     }
     
     

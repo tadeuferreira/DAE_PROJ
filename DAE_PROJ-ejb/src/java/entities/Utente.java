@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -30,12 +31,17 @@ public class Utente implements Serializable {
     @NotNull
     private String name;
     
-    LinkedList<Necessidade> necessidades;
+    List<Necessidade> necessidades;
     
-    LinkedList<Cuidador> cuidadores;
+    List<Cuidador> cuidadores;
+    
+    List<Procedimento> procedimentos;
+    
+    
     
     public Utente(){
-      this.necessidades = new LinkedList();  
+      this.necessidades = new LinkedList();
+      this.procedimentos = new LinkedList();
     }
     
     public Utente(String code, String name){
@@ -43,6 +49,7 @@ public class Utente implements Serializable {
        this.name = name;
        this.necessidades = new LinkedList();
        this.cuidadores = new LinkedList();
+       this.procedimentos = new LinkedList();
     }
 
     public String getCode() {
@@ -61,7 +68,7 @@ public class Utente implements Serializable {
         this.name = name;
     }
 
-    public LinkedList<Necessidade> getNecessidades() {
+    public List<Necessidade> getNecessidades() {
         return necessidades;
     }
 
@@ -69,12 +76,45 @@ public class Utente implements Serializable {
         this.necessidades = necessidades;
     }
 
-    public LinkedList<Cuidador> getCuidadores() {
+    public List<Cuidador> getCuidadores() {
         return cuidadores;
     }
 
     public void setCuidadores(LinkedList<Cuidador> cuidadores) {
         this.cuidadores = cuidadores;
+    }
+    
+    public void addCuidador(Cuidador cuidador){
+        this.cuidadores.add(cuidador);
+    }
+    
+    public void removeCuidador(Cuidador cuidador){
+        this.cuidadores.remove(cuidador);
+    }
+    
+    public void addProcedimento(Procedimento procedimento){
+        this.procedimentos.add(procedimento);
+    }
+    
+    public void removeProcedimento(Procedimento procedimento){
+        this.procedimentos.remove(procedimento);
+    }
+    
+    
+    public void addNecessidade(Necessidade necessidade){
+        this.necessidades.add(necessidade);
+    }
+    
+    public void removeNecessidade(Necessidade necessidade){
+        this.necessidades.remove(necessidade);
+    }
+
+    public List<Procedimento> getProcedimentos() {
+        return procedimentos;
+    }
+
+    public void setProcedimentos(LinkedList<Procedimento> procedimentos) {
+        this.procedimentos = procedimentos;
     }
     
     

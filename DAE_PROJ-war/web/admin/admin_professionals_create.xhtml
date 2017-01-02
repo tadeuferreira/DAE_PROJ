@@ -54,6 +54,12 @@
           
         <h:commandButton id="submit" value="Create" action="#{administratorManager.createProfissionalSaude()}" binding="#{administratorManager.component}"/>
         </h:form>
+        <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+                action="#{administratorManager.goToIndex}" />
+        </h:form>
        
     </h:body>
 </html>

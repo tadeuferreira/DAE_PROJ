@@ -9,21 +9,17 @@
     <h:body>
         <h:panelGrid columns="2">
 
-            <h:outputLabel for="username" value="Username: " />
+            <h:outputLabel for="code" value="Code: " />
             <h:outputText 
-                id="username"
-                value="#{administratorManager.currentCuidador.username}"/>
+                id="code"
+                value="#{administratorManager.currentUtente.code}"/>
 
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManager.currentCuidador.name}"/>
+                value="#{administratorManager.currentUtente.name}"/>
 
-            <h:outputLabel for="email" value="Email: " />
-            <h:outputText 
-                id="email"
-                value="#{administratorManager.currentCuidador.email}"/>
-
+           
         </h:panelGrid>
         
         <br/>        
@@ -32,7 +28,7 @@
             <h:commandLink
                 id="return"
                 value="Return"
-                action="index?faces-redirect=true" />
+                 action="#{administratorManager.goToIndex}" />
         </h:form>
         <h:messages errorStyle="color: red" />        
         

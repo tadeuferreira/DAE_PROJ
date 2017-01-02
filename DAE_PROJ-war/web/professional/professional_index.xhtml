@@ -7,6 +7,12 @@
         <title>Academic Management</title>
     </h:head>
     <h:body>
+        <br/>
+          <h:messages errorStyle="color: red" />
+          <br/>
+             <h:form>
+            <h:commandLink value="Logout" action="#{userManager.logout}"/>
+        </h:form>
         <h:dataTable
             var="material"
             summary="List of all materials"
@@ -45,11 +51,11 @@
                     <h:outputText value="Actions" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink value="Details" action="/faces/professional/professional_materials_details?faces-redirect=true">
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_materials_details?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional/professional_materials_update?faces-redirect=true">
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_materials_update?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
                     </h:commandLink>
                     &nbsp;
@@ -63,7 +69,7 @@
         </h:dataTable>
         <br/>
         <h:form>
-            <h:commandLink value="New Material" action="/faces/professional/professional_materials_create?faces-redirect=true"/>
+            <h:commandLink value="New Material" action="/faces/professional_admin/professional_admin_materials_create?faces-redirect=true"/>
             </h:form>
         
         <br/>
@@ -100,11 +106,11 @@
                     <h:outputText value="Actions" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink value="Details" action="/faces/professional/professional_utentes_details?faces-redirect=true">
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_utentes_details?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional/professional_utentes_update?faces-redirect=true">
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_utentes_update?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
                     </h:commandLink>
                     &nbsp;
@@ -118,8 +124,68 @@
         </h:dataTable>
         <br/>
         <h:form>
-            <h:commandLink value="New Utente" action="/faces/professional/professional_utentes_create?faces-redirect=true"/>
+            <h:commandLink value="New Utente" action="/faces/professional_admin/professional_admin_utentes_create?faces-redirect=true"/>
             </h:form>
+         <h:dataTable
+            var="cuidador"
+            summary="List of all cuidadores"
+            value="#{administratorManager.allCuidadores}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Cuidadores" />
+            </f:facet>             
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Username" />
+                </f:facet>
+                <h:outputText value="#{cuidador.username}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{cuidador.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{cuidador.email}" />
+            </h:column> 
+             
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_cuidadores_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="/faces/professional/professional_cuidadores_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeCuidador}">
+                        <f:param name="cuidadorUsername" id="cuidadorUsername" value="#{cuidador.username}" />
+                    </h:commandLink>
+                </h:form>
+            </h:column>                        
+
+        </h:dataTable>
+        
+        <br/>
+        <br/>
+        
+        <h:form>
+            <h:commandLink value="New Cuidador" action="/faces/professional_admin/professional_admin_cuidadores_create?faces-redirect=true"/>
+        </h:form>
     </h:body>
 </html>
 

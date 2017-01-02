@@ -36,7 +36,12 @@
 
         </h:form>
         
-        <h:messages errorStyle="color: red" />        
+        <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+               action="#{administratorManager.goToIndex}" />
+        </h:form>    
 
     </h:body>
 </html>

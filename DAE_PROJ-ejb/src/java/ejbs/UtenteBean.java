@@ -6,10 +6,14 @@
 package ejbs;
 
 import dtos.UtenteDTO;
+import entities.Cuidador;
 import entities.Utente;
+import exceptions.CuidadorAssociatedException;
 import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
+import exceptions.UtenteAssociatedException;
+import exceptions.UtenteNotEnrolledException;
 import exceptions.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -110,5 +114,98 @@ public class UtenteBean implements Serializable {
             dtos.add(utenteToDTO(u));
         }
         return dtos;
+    }
+    
+    public void enrollUtenteToCuidador(String username, String code)
+            throws EntityDoesNotExistException, CuidadorAssociatedException, UtenteAssociatedException{
+        try {
+
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if (cuidador == null) {
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
+            }
+
+            Utente utente = em.find(Utente.class, code);
+            if (utente == null) {
+                throw new EntityDoesNotExistException("There is no utente with that code.");
+            }
+
+            if (cuidador.getUtentes().contains(utente)) {
+                throw new UtenteAssociatedException("Utente is already associated to that cuidador.");
+            }
+
+            if (utente.getCuidadores().contains(cuidador)) {
+                throw new CuidadorAssociatedException("Cuidador is already associated to that utente.");
+            }
+
+            utente.addCuidador(cuidador);
+            cuidador.addUtente(utente);
+
+        } catch (EntityDoesNotExistException | CuidadorAssociatedException | UtenteAssociatedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    } 
+ 
+    
+    public List<UtenteDTO> getEnrolledUtentes(String username) throws EntityDoesNotExistException{
+        try {
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if( cuidador == null){
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
+            }            
+            List<Utente> utentes = (List<Utente>) cuidador.getUtentes();
+            return utentesToDTOs(utentes);
+        } catch (EntityDoesNotExistException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public void unrollUtente(String username, String code) 
+            throws EntityDoesNotExistException, UtenteNotEnrolledException {
+        try {
+            Utente utente = em.find(Utente.class, code);
+            if(utente == null){
+                throw new EntityDoesNotExistException("There is no utente with that code.");
+            }            
+            
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if(cuidador == null){
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
+            }
+            
+            if(!cuidador.getUtentes().contains(utente)){
+                throw new UtenteNotEnrolledException();
+            }            
+            
+            cuidador.removeUtente(utente);
+            utente.removeCuidador(cuidador);
+
+        } catch (EntityDoesNotExistException | UtenteNotEnrolledException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public List<UtenteDTO> getUnrolledUtentes(String username) throws EntityDoesNotExistException{
+        try {
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if( cuidador == null){
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
+            }            
+            List<Utente> utentes = (List<Utente>) em.createNamedQuery("findAllUtentes").getResultList();
+            List<Utente> enrolled = em.find(Cuidador.class, username).getUtentes();
+            utentes.removeAll(enrolled);
+            
+            return utentesToDTOs(utentes);
+        } catch (EntityDoesNotExistException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
     }
 }

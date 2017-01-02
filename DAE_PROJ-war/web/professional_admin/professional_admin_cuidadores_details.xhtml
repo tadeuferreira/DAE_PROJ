@@ -9,25 +9,20 @@
     <h:body>
         <h:panelGrid columns="2">
 
-            <h:outputLabel for="code" value="Code: " />
+            <h:outputLabel for="username" value="Username: " />
             <h:outputText 
-                id="code"
-                value="#{administratorManager.currentMaterial.code}"/>
+                id="username"
+                value="#{administratorManager.currentCuidador.username}"/>
 
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManager.currentMaterial.name}"/>
+                value="#{administratorManager.currentCuidador.name}"/>
 
-            <h:outputLabel for="type" value="Type: " />
+            <h:outputLabel for="email" value="Email: " />
             <h:outputText 
-                id="type"
-                value="#{administratorManager.currentMaterial.type}"/>
-            
-            <h:outputLabel for="quantity" value="Quantity: " />
-            <h:outputText 
-                id="quantity"
-                value="#{administratorManager.currentMaterial.quantity}"/>
+                id="email"
+                value="#{administratorManager.currentCuidador.email}"/>
 
         </h:panelGrid>
         
@@ -37,7 +32,7 @@
             <h:commandLink
                 id="return"
                 value="Return"
-                action="index?faces-redirect=true" />
+                action="#{administratorManager.goToIndex}" />
         </h:form>
         <h:messages errorStyle="color: red" />        
         

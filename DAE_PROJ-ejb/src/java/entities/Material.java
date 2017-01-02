@@ -42,9 +42,11 @@ public class Material implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "CUIDADOR_USERNAME", referencedColumnName = "USERNAME"))
     LinkedList<Cuidador> cuidadores;
+    LinkedList<Necessidade> necessidades;
     
     public Material(){
         this.cuidadores = new LinkedList();
+        this.necessidades = new LinkedList();
     }
     
     public Material(int code, String name, String type, String quantity){
@@ -54,6 +56,8 @@ public class Material implements Serializable {
         this.quantity = quantity;
         
         this.cuidadores = new LinkedList();
+        this.necessidades = new LinkedList();
+
     }
 
     public int getCode() {
@@ -95,6 +99,14 @@ public class Material implements Serializable {
     public void removeCuidador(Cuidador cuidador){
         this.cuidadores.remove(cuidador);
     }
+    
+    public void addNecessidade(Necessidade necessidade){
+        this.necessidades.addLast(necessidade);
+    }
+    
+    public void removeCuidador(Necessidade necessidade){
+        this.necessidades.remove(necessidade);
+    }
 
     public LinkedList<Cuidador> getCuidadores() {
         return cuidadores;
@@ -102,6 +114,14 @@ public class Material implements Serializable {
 
     public void setCuidadores(LinkedList<Cuidador> cuidadores) {
         this.cuidadores = cuidadores;
+    }
+
+    public LinkedList<Necessidade> getNecessidades() {
+        return necessidades;
+    }
+
+    public void setNecessidades(LinkedList<Necessidade> necessidades) {
+        this.necessidades = necessidades;
     }
     
     

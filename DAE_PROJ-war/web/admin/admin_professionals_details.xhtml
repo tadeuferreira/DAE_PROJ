@@ -7,18 +7,35 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-     
-                <h:outputLabel for="username" value="Username: #{administratorManager.currentProfissionalSaude.username} " />
-                <br></br>
-                <br></br>
-                <h:outputLabel for="email" value="Email: #{administratorManager.currentProfissionalSaude.email}"/>
-                <br></br>
-                <br></br>
-                <h:outputLabel for="name" value="Name: #{administratorManager.currentProfissionalSaude.name}"/>
-                <br></br>
-                <br></br>
-                    
-            
+        <h:panelGrid columns="2">
+
+            <h:outputLabel for="username" value="Username: " />
+            <h:outputText 
+                id="username"
+                value="#{administratorManager.currentProfissionalSaude.username}"/>
+
+            <h:outputLabel for="name" value="Name: " />
+            <h:outputText 
+                id="name"
+                value="#{administratorManager.currentProfissionalSaude.name}"/>
+
+            <h:outputLabel for="email" value="Email: " />
+            <h:outputText 
+                id="email"
+                value="#{administratorManager.currentProfissionalSaude.email}"/>
+
+        </h:panelGrid>
+        
+        <br/>        
+
+        <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+                action="/faces/admin/admin_index?faces-redirect=true" />
+        </h:form>
+        <h:messages errorStyle="color: red" />        
+        
     </h:body>
 </html>
 

@@ -7,7 +7,7 @@
         <title>Academic Management</title>
     </h:head>
     <h:body>
-        <h:form>                  
+        <h:form>     
             <h:panelGrid columns="3">
 
                 <h:outputLabel for="username" value="Username: " />
@@ -44,20 +44,216 @@
                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                 </h:inputText>    
                 <h:message for="email" errorStyle="color: red" />
-
-                <br></br>
-
+                
                 <h:commandButton
                     id="submit"
                     value="Update"
                     action="#{administratorManager.updateCuidador}" />
                 <h:message for="submit" style="color: red"/>
-            </h:panelGrid>  
-
+                </h:panelGrid>  
         </h:form>
-        
-        <h:messages errorStyle="color: red" />        
 
+                <br></br>
+                <br></br>
+                
+                <h:dataTable
+                    var="material"
+                    summary="List of all associated materiais"
+                    value="#{administratorManager.currentCuidadorMateriais}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Enrolled Materials" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code" />
+                        </f:facet>
+                        <h:outputText value="#{material.code}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{material.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type" />
+                        </f:facet>
+                        <h:outputText value="#{material.type}" />
+                    </h:column>                        
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quantity" />
+                        </f:facet>
+                        <h:outputText value="#{material.quantity}" />
+                    </h:column> 
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Actions" />
+                        </f:facet>
+                    <h:form>
+                        <h:commandLink value="Unroll" actionListener="#{administratorManager.unrollMaterial}">
+                            <f:param name="materialCode" id="materialCode" value="#{material.code}" />
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+
+        </h:dataTable>
+                
+                <br></br>
+                <br></br>
+                
+                <h:dataTable
+                    var="material"
+                    summary="List of all unassociated materiais"
+                    value="#{administratorManager.unrolledMaterials}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Unrolled Materials" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code" />
+                        </f:facet>
+                        <h:outputText value="#{material.code}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{material.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type" />
+                        </f:facet>
+                        <h:outputText value="#{material.type}" />
+                    </h:column>                        
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quantity" />
+                        </f:facet>
+                        <h:outputText value="#{material.quantity}" />
+                    </h:column> 
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Actions" />
+                        </f:facet>
+                    <h:form>
+                        <h:commandLink value="Enroll" actionListener="#{administratorManager.enrollMaterial}">
+                            <f:param name="materialCode" id="materialCode" value="#{material.code}" />
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+
+                </h:dataTable>
+                
+                <br></br>
+                <br></br>
+                
+                <h:dataTable
+                    var="utente"
+                    summary="List of all associated utentes"
+                    value="#{administratorManager.currentCuidadorUtentes}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Enrolled Utentes" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code" />
+                        </f:facet>
+                        <h:outputText value="#{utente.code}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{utente.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Actions" />
+                        </f:facet>
+                    <h:form>
+                        <h:commandLink value="Unroll" actionListener="#{administratorManager.unrollUtente}">
+                            <f:param name="code" id="code" value="#{utente.code}" />
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+
+        </h:dataTable>
+                
+                <br></br>
+                <br></br>
+                
+                <h:dataTable
+                    var="utente"
+                    summary="List of all unassociated utentes"
+                    value="#{administratorManager.unrolledUtentes}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Unrolled Utentes" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code" />
+                        </f:facet>
+                        <h:outputText value="#{utente.code}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{utente.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Actions" />
+                        </f:facet>
+                    <h:form>
+                        <h:commandLink value="Enroll" actionListener="#{administratorManager.enrollUtente}">
+                            <f:param name="code" id="code" value="#{utente.code}" />
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+
+                </h:dataTable>
+                <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+               action="#{administratorManager.goToIndex}" />
+        </h:form>
     </h:body>
 </html>
 

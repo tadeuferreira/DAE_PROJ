@@ -51,6 +51,12 @@
             <br/>
             <h:commandButton id="submit" value="Update" action="#{administratorManager.updateProfissionalSaude()}"/>
         </h:form>
+        <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+                action="#{administratorManager.goToIndex}" />
+        </h:form>
     </h:body>
 </html>
 

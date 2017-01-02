@@ -59,7 +59,12 @@
 
         </h:form>
 
-        <!--<h:messages style="color:red"/> -->        
+        <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+           action="#{administratorManager.goToIndex}" />
+        </h:form>   
 
     </h:body>
 </html>

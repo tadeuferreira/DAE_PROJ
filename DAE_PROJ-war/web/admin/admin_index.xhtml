@@ -7,6 +7,12 @@
         <title>Academic Management</title>
     </h:head>
     <h:body>
+          <br/>
+          <h:messages errorStyle="color: red" />
+          <br/>
+        <h:form>
+            <h:commandLink value="Logout" action="#{userManager.logout}"/>
+        </h:form>
 
         <h:dataTable
             var="admin"
@@ -68,14 +74,9 @@
         <h:form>
             <h:commandLink value="New Admin" action="/faces/admin/admin_admins_create?faces-redirect=true"/>
         </h:form>
-        
+    
         <br/>
-        
-        <h:messages errorStyle="color: red" />
-        
-        <br/>
-        <br/>
-        
+       
         <h:dataTable
             var="professional"
             summary="List of all professionals"
@@ -134,14 +135,10 @@
         <br/>
         
         <h:form>
-            <h:commandLink value="New Profissional de Saude" action="/faces/professional/professional_professionals_create?faces-redirect=true"/>
+            <h:commandLink value="New Profissional de Saude" action="/faces/admin/admin_professionals_create?faces-redirect=true"/>
         </h:form>
         
-        <br/>
-        
-        <h:messages errorStyle="color: red" />
-        
-        <br/>
+    
         <br/>
         
         <h:dataTable
@@ -182,11 +179,11 @@
                     <h:outputText value="Actions" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink value="Details" action="prof_cuidadores_details?faces-redirect=true">
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_cuidadores_details?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Update" action="prof_cuidadores_update?faces-redirect=true">
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_cuidadores_update?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentCuidador}" value="#{cuidador}" />
                     </h:commandLink>
                     &nbsp;
@@ -202,14 +199,10 @@
         <br/>
         
         <h:form>
-            <h:commandLink value="New Cuidador" action="prof_cuidadores_create?faces-redirect=true"/>
+            <h:commandLink value="New Cuidador" action="/faces/professional_admin/professional_admin_cuidadores_create?faces-redirect=true"/>
         </h:form>
         
-        <br/>
-        
-        <h:messages errorStyle="color: red" />
-        
-        <br/>
+       
         <br/>
         <h:dataTable
             var="material"
@@ -249,11 +242,11 @@
                     <h:outputText value="Actions" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink value="Details" action="/faces/professional/professional_materials_details?faces-redirect=true">
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_materials_details?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional/professional_materials_update?faces-redirect=true">
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_materials_update?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
                     </h:commandLink>
                     &nbsp;
@@ -267,7 +260,7 @@
         </h:dataTable>
         <br/>
         <h:form>
-            <h:commandLink value="New Material" action="/faces/professional/professional_materials_create?faces-redirect=true"/>
+            <h:commandLink value="New Material" action="/faces/professional_admin/professional_admin_materials_create?faces-redirect=true"/>
             </h:form>
         
         <br/>
@@ -304,11 +297,11 @@
                     <h:outputText value="Actions" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink value="Details" action="/faces/professional/professional_utentes_details?faces-redirect=true">
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_utentes_details?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
                     </h:commandLink>
                     &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional/professional_utentes_update?faces-redirect=true">
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_utentes_update?faces-redirect=true">
                         <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
                     </h:commandLink>
                     &nbsp;
@@ -322,7 +315,7 @@
         </h:dataTable>
         <br/>
         <h:form>
-            <h:commandLink value="New Utente" action="/faces/professional/professional_utentes_create?faces-redirect=true"/>
+            <h:commandLink value="New Utente" action="/faces/professional_admin/professional_admin_utentes_create?faces-redirect=true"/>
             </h:form>
     </h:body>
 </html>
