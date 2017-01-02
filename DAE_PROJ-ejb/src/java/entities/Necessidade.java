@@ -6,9 +6,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
@@ -31,18 +37,23 @@ public class Necessidade implements Serializable {
     @NotNull
     String description;
     
-    LinkedList<Material> materiais;
-    LinkedList<Utente> utentes;
+    @ManyToMany(mappedBy="necessidades")
+    List<Material> materiais;
+    
+    @ManyToOne
+    @JoinColumn(name="UTENTE_CODE")           
+    Utente utente;
     
     public Necessidade(){
-        this.materiais = new LinkedList();
+        this.materiais = new ArrayList();
     }
     
-    public Necessidade(int number, String name, String description){
+    public Necessidade(int number, String name, String description, Utente utente){
         this.number = number;
         this.name = name;
         this.description = description;
-        this.materiais = new LinkedList();
+        this.utente = utente;
+        this.materiais = new ArrayList();
     }
 
     public int getNumber() {
@@ -69,32 +80,24 @@ public class Necessidade implements Serializable {
         this.description = description;
     }
 
-    public LinkedList<Material> getMateriais() {
+    public List<Material> getMateriais() {
         return materiais;
     }
 
-    public void setMateriais(LinkedList<Material> materiais) {
+    public void setMateriais(ArrayList<Material> materiais) {
         this.materiais = materiais;
     }
 
-    public LinkedList<Utente> getUtentes() {
-        return utentes;
+    public Utente getUtente() {
+        return utente;
     }
 
-    public void setUtentes(LinkedList<Utente> utentes) {
-        this.utentes = utentes;
-    }
-    
-    public void addUtente(Utente utente){
-        this.utentes.addLast(utente);
-    }
-    
-    public void removeUtente(Utente utente){
-        this.utentes.remove(utente);
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
     public void addMaterial(Material material){
-        this.materiais.addLast(material);
+        this.materiais.add(material);
     }
     
     public void removeMaterial(Material material){

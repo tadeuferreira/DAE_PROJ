@@ -6,12 +6,17 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -31,25 +36,27 @@ public class Utente implements Serializable {
     @NotNull
     private String name;
     
+    @OneToMany(cascade= CascadeType.REMOVE , mappedBy="utente")
     List<Necessidade> necessidades;
     
-    List<Cuidador> cuidadores;
+    @ManyToOne
+    @JoinColumn(name="CUIDADOR_USERNAME")   
+    Cuidador cuidador;
     
     List<Procedimento> procedimentos;
     
     
     
     public Utente(){
-      this.necessidades = new LinkedList();
-      this.procedimentos = new LinkedList();
+      this.necessidades = new ArrayList();
+      this.procedimentos = new ArrayList();
     }
     
     public Utente(String code, String name){
        this.code = code;
        this.name = name;
-       this.necessidades = new LinkedList();
-       this.cuidadores = new LinkedList();
-       this.procedimentos = new LinkedList();
+       this.necessidades = new ArrayList();
+       this.procedimentos = new ArrayList();
     }
 
     public String getCode() {
@@ -72,25 +79,18 @@ public class Utente implements Serializable {
         return necessidades;
     }
 
-    public void setNecessidades(LinkedList<Necessidade> necessidades) {
+    public void setNecessidades(ArrayList<Necessidade> necessidades) {
         this.necessidades = necessidades;
     }
 
-    public List<Cuidador> getCuidadores() {
-        return cuidadores;
+    public Cuidador getCuidador() {
+        return cuidador;
     }
 
-    public void setCuidadores(LinkedList<Cuidador> cuidadores) {
-        this.cuidadores = cuidadores;
+    public void setCuidador(Cuidador cuidador) {
+        this.cuidador = cuidador;
     }
-    
-    public void addCuidador(Cuidador cuidador){
-        this.cuidadores.add(cuidador);
-    }
-    
-    public void removeCuidador(Cuidador cuidador){
-        this.cuidadores.remove(cuidador);
-    }
+
     
     public void addProcedimento(Procedimento procedimento){
         this.procedimentos.add(procedimento);

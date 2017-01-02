@@ -20,9 +20,85 @@
                 value="#{administratorManager.currentUtente.name}"/>
 
            
-        </h:panelGrid>
-        
+        </h:panelGrid>      
         <br/>        
+                <h:dataTable
+                    var="necessidade"
+                    summary="List of all associated necessidades"
+                    value="#{administratorManager.currentUtenteNecessidades}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Necessidades do Utente" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Number" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.number}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.description}" />
+                    </h:column>                        
+
+        </h:dataTable>
+        
+        <br/>              
+                <h:dataTable
+                    var="material"
+                    summary="List of all associated materials of necessidades"
+                    value="#{administratorManager.enrolledMateriaisOfNecessidade}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Materiais Necessarios" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code:" />
+                        </f:facet>
+                        <h:outputText value="#{material.code}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name:" />
+                        </f:facet>
+                        <h:outputText value="#{material.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type:" />
+                        </f:facet>
+                        <h:outputText value="#{material.type}" />
+                    </h:column> 
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quantity:" />
+                        </f:facet>
+                        <h:outputText value="#{material.quantity}" />
+                    </h:column> 
+
+        </h:dataTable>        
 
         <h:form>                  
             <h:commandLink

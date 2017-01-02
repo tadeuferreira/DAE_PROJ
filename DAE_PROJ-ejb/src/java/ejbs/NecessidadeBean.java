@@ -35,17 +35,21 @@ public class NecessidadeBean implements Serializable{
     @PersistenceContext
     private EntityManager em;
     
-    public void createNecessidade(int number, String name, String description) 
+    public void createNecessidade(int number, String name, String description, String code) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
-        
+        System.out.println("createNecessidade");
         try{  
             if(em.find(Necessidade.class,number)!= null){
                throw new EntityAlreadyExistsException("A necessidade whith that number already exists");
             }
-            
-            Necessidade necessidade = new Necessidade(number, name, description);
+            Utente utente = em.find(Utente.class, code);
+            if (utente == null) {
+                throw new EntityDoesNotExistException("There is no utente with that code.");
+            }
+            Necessidade necessidade = new Necessidade(number, name, description, utente);
+            utente.addNecessidade(necessidade);
             em.persist(necessidade);
-       // EntityDoesNotExistException missing
+            em.merge(utente);
         }catch (EntityAlreadyExistsException e){
             throw e;
         }catch(ConstraintViolationException e){
@@ -111,33 +115,38 @@ public class NecessidadeBean implements Serializable{
         for(Necessidade n : necessidades){
             dtos.add(necessidadeToDTO(n));
         }
+        System.out.println("nec to dto");
         return dtos;
     }
-    
+    /*
     public void associateNecessidadeToUtente(String code, int number)
             throws EntityDoesNotExistException, UtenteAssociatedException, NoSuchAlgorithmException{
         try {
-
+               System.out.println("2.1");
             Utente utente = em.find(Utente.class, code);
             if (utente == null) {
                 throw new EntityDoesNotExistException("There is no utente with that code.");
             }
-
+ System.out.println("2.2");
             Necessidade necessidade = em.find(Necessidade.class, number);
             if (necessidade == null) {
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }
+             System.out.println("2.3");
 
             if (utente.getNecessidades().contains(necessidade)) {
                 throw new NoSuchAlgorithmException("Necessidade is already associated to that utente.");
             }
+             System.out.println("2.4");
 
             if (necessidade.getUtentes().contains(utente)) {
                 throw new UtenteAssociatedException("Utente is already associated to that necessidade.");
             }
-
+ System.out.println("2.5");
             necessidade.addUtente(utente);
+             System.out.println("2.6");
             utente.addNecessidade(necessidade);
+             System.out.println("2.7");
 
         } catch (EntityDoesNotExistException | UtenteAssociatedException | NoSuchAlgorithmException e) {
             throw e;
@@ -145,14 +154,15 @@ public class NecessidadeBean implements Serializable{
             throw new EJBException(e.getMessage());
         }
     } 
- 
+ */
     
     public List<NecessidadeDTO> getAssociatedNecessidades(String code) throws EntityDoesNotExistException{
         try {
             Utente utente = em.find(Utente.class, code);
             if( utente == null){
                 throw new EntityDoesNotExistException("There is no utente with that code.");
-            }            
+            }   
+            System.out.println("utent found");
             List<Necessidade> necessidades = (List<Necessidade>) utente.getNecessidades();
             return necessidadesToDTOs(necessidades);
         } catch (EntityDoesNotExistException e) {
@@ -161,7 +171,7 @@ public class NecessidadeBean implements Serializable{
             throw new EJBException(e.getMessage());
         }
     }
-    
+    /*
     public void unrollNecessidade(String code, int number) 
             throws EntityDoesNotExistException, NecessidadeNotEnrolledException {
         try {
@@ -205,5 +215,5 @@ public class NecessidadeBean implements Serializable{
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-    }
+    }*/
 }

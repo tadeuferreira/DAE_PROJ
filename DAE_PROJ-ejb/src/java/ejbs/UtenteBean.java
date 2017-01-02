@@ -134,11 +134,11 @@ public class UtenteBean implements Serializable {
                 throw new UtenteAssociatedException("Utente is already associated to that cuidador.");
             }
 
-            if (utente.getCuidadores().contains(cuidador)) {
+            if (utente.getCuidador().getUsername() == cuidador.getUsername()) {
                 throw new CuidadorAssociatedException("Cuidador is already associated to that utente.");
             }
 
-            utente.addCuidador(cuidador);
+            utente.setCuidador(cuidador);
             cuidador.addUtente(utente);
 
         } catch (EntityDoesNotExistException | CuidadorAssociatedException | UtenteAssociatedException e) {
@@ -182,7 +182,7 @@ public class UtenteBean implements Serializable {
             }            
             
             cuidador.removeUtente(utente);
-            utente.removeCuidador(cuidador);
+            utente.setCuidador(null);
 
         } catch (EntityDoesNotExistException | UtenteNotEnrolledException e) {
             throw e;             

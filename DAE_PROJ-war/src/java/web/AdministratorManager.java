@@ -96,6 +96,7 @@ public class AdministratorManager implements Serializable {
         this.newMaterial = new MaterialDTO();
         this.newUtente = new UtenteDTO();
         this.newProcedimento = new ProcedimentoDTO();
+        this.newNecessidade = new NecessidadeDTO();
     }
     
     ///////CUIDADOR///////
@@ -477,9 +478,11 @@ public class AdministratorManager implements Serializable {
     
     public String createNecessidade() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            necessidadeBean.createNecessidade(newNecessidade.getNumber(), newNecessidade.getName(), newNecessidade.getDescription());
+            System.out.println("1.1");
+            necessidadeBean.createNecessidade(newNecessidade.getNumber(), newNecessidade.getName(), newNecessidade.getDescription(), currentUtente.getCode());
+            System.out.println("1.2");
             clearNewNecessidade();
-            return "index?faces-redirect=true";
+            return "/faces/professional_admin/professional_admin_utentes_update";
         }catch (EntityExistsException | EntityDoesNotExistException e){
             FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
             
@@ -538,13 +541,16 @@ public class AdministratorManager implements Serializable {
     
     public List<NecessidadeDTO> getCurrentUtenteNecessidades() {
         try {
-            return necessidadeBean.getAssociatedNecessidades(currentUtente.getCode());
+            List<NecessidadeDTO> nec = necessidadeBean.getAssociatedNecessidades(currentUtente.getCode());
+            System.out.println("nec done");
+            return nec;
         } catch (Exception e) {
+            System.out.println("Execption Necessidades");
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
         }
     }
-    
+    /*
     public List<NecessidadeDTO> getUnrolledNecessidades() {
         try {
             return necessidadeBean.getUnrolledNecessidades(currentUtente.getCode());
@@ -555,18 +561,19 @@ public class AdministratorManager implements Serializable {
         }
         return null;
     }
-    
+    */
     public List<NecessidadeDTO> getEnrolledNecessidades() {
         try {
             return necessidadeBean.getAssociatedNecessidades(currentUtente.getCode());
         } catch (EntityDoesNotExistException e) {
+             
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
         return null;
     }
-    
+    /*
     public void enrollNecessidade(ActionEvent event) {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("number");
@@ -590,7 +597,7 @@ public class AdministratorManager implements Serializable {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }
-    
+    */
     public List<MaterialDTO> getUnrolledMateriaisOfNecessidade() {
         try {
             return materialBean.getUnrolledMaterialsOfNecessidade(currentNecessidade.getNumber());
@@ -604,10 +611,12 @@ public class AdministratorManager implements Serializable {
     
     public List<MaterialDTO> getEnrolledMateriaisOfNecessidade() {
         try {
-            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getNumber());
+            return materialBean.getAssociatedMateriaisOfNecessidade(getEnrolledNecessidades());
         } catch (EntityDoesNotExistException e) {
+             System.out.println("Execption enrolled 1 Necessidades");
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
+             System.out.println(e.toString());
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
         return null;

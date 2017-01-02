@@ -6,7 +6,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,12 +43,19 @@ public class Material implements Serializable {
             = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"),
             inverseJoinColumns
             = @JoinColumn(name = "CUIDADOR_USERNAME", referencedColumnName = "USERNAME"))
-    LinkedList<Cuidador> cuidadores;
-    LinkedList<Necessidade> necessidades;
+    List<Cuidador> cuidadores;
+    
+    @ManyToMany
+    @JoinTable(name = "MATERIAL_NECESSIDADE",
+            joinColumns
+            = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"),
+            inverseJoinColumns
+            = @JoinColumn(name = "NECESSIDADE_NUMBER", referencedColumnName = "NUMBER"))
+    List<Necessidade> necessidades;
     
     public Material(){
-        this.cuidadores = new LinkedList();
-        this.necessidades = new LinkedList();
+        this.cuidadores = new ArrayList();
+        this.necessidades = new ArrayList();
     }
     
     public Material(int code, String name, String type, String quantity){
@@ -55,8 +64,8 @@ public class Material implements Serializable {
         this.type = type;
         this.quantity = quantity;
         
-        this.cuidadores = new LinkedList();
-        this.necessidades = new LinkedList();
+        this.cuidadores = new ArrayList();
+        this.necessidades = new ArrayList();
 
     }
 
@@ -93,7 +102,7 @@ public class Material implements Serializable {
     }
 
     public void addCuidador(Cuidador cuidador){
-        this.cuidadores.addLast(cuidador);
+        this.cuidadores.add(cuidador);
     }
     
     public void removeCuidador(Cuidador cuidador){
@@ -101,26 +110,26 @@ public class Material implements Serializable {
     }
     
     public void addNecessidade(Necessidade necessidade){
-        this.necessidades.addLast(necessidade);
+        this.necessidades.add(necessidade);
     }
     
     public void removeCuidador(Necessidade necessidade){
         this.necessidades.remove(necessidade);
     }
 
-    public LinkedList<Cuidador> getCuidadores() {
+    public List<Cuidador> getCuidadores() {
         return cuidadores;
     }
 
-    public void setCuidadores(LinkedList<Cuidador> cuidadores) {
+    public void setCuidadores(ArrayList<Cuidador> cuidadores) {
         this.cuidadores = cuidadores;
     }
 
-    public LinkedList<Necessidade> getNecessidades() {
+    public List<Necessidade> getNecessidades() {
         return necessidades;
     }
 
-    public void setNecessidades(LinkedList<Necessidade> necessidades) {
+    public void setNecessidades(ArrayList<Necessidade> necessidades) {
         this.necessidades = necessidades;
     }
     

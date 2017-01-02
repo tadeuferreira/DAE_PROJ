@@ -7,11 +7,19 @@ package entities;
 
 import entities.UserGroup.GROUP;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,13 +33,19 @@ import javax.persistence.NamedQuery;
 public class Cuidador extends User implements Serializable {
 
     @ManyToMany(mappedBy = "cuidadores")
-    LinkedList<Material> materials;
+             @JoinTable(name = "CUIDADORES_MATERIALS",
+            joinColumns
+            = @JoinColumn(name = "CUIDADOR_USERNAME", referencedColumnName = "USERNAME"),
+            inverseJoinColumns
+            = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"))
+    List<Material> materials;
     
-    LinkedList<Utente> utentes;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "cuidador")
+    List<Utente> utentes;
     
     public Cuidador(){
-        this.materials = new LinkedList();
-        this.utentes = new LinkedList();
+        this.materials = new ArrayList();
+        this.utentes = new ArrayList();
     }
     
     public Cuidador(String username, String password, String name, String email){
@@ -48,7 +62,7 @@ public class Cuidador extends User implements Serializable {
         this.materials.remove(material);
     }
 
-    public LinkedList<Material> getMaterials() {
+    public List<Material> getMaterials() {
         return materials;
     }
 
@@ -56,11 +70,11 @@ public class Cuidador extends User implements Serializable {
         this.materials = materials;
     }
 
-    public LinkedList<Utente> getUtentes() {
+    public List<Utente> getUtentes() {
         return utentes;
     }
 
-    public void setUtentes(LinkedList<Utente> utentes) {
+    public void setUtentes(ArrayList<Utente> utentes) {
         this.utentes = utentes;
     }
       

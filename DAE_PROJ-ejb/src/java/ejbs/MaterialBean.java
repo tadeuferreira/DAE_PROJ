@@ -6,6 +6,7 @@
 package ejbs;
 
 import dtos.MaterialDTO;
+import dtos.NecessidadeDTO;
 import entities.Cuidador;
 import entities.Material;
 import entities.Necessidade;
@@ -238,7 +239,26 @@ public class MaterialBean implements Serializable{
             throw new EJBException(e.getMessage());
         }
     } 
- 
+ public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(List<NecessidadeDTO> neces) throws EntityDoesNotExistException{
+        try {
+            List<Material> materials = new ArrayList<>();
+            for(NecessidadeDTO n: neces){
+                  Necessidade necessidade = em.find(Necessidade.class, n.getNumber());
+            if( necessidade == null){
+                throw new EntityDoesNotExistException("There is no necessidade with that number.");
+            }            
+            List<Material> aux = (List<Material>) necessidade.getMateriais();
+             for(Material m: aux){
+                 materials.add(m);
+             }
+            }      
+            return materialsToDTOs(materials);
+        } catch (EntityDoesNotExistException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
     
     public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(int number) throws EntityDoesNotExistException{
         try {
