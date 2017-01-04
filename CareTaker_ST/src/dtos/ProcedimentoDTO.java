@@ -25,6 +25,8 @@ public class ProcedimentoDTO implements Serializable{
     private String necessidadeCode;
     private String utenteCode;
     
+    
+    
     public ProcedimentoDTO(){
         
     }
@@ -37,6 +39,17 @@ public class ProcedimentoDTO implements Serializable{
       this.utenteCode = utenteCode;
     }
 
+    @Override
+    public String toString() {
+     StringBuilder sb = new StringBuilder();
+       sb.append("Code: "+code);
+       sb.append(" Name: "+name);
+       sb.append(" Description: "+description);
+       sb.append(" Patient Code: "+ utenteCode);
+       sb.append(" Necessity Code: "+ necessidadeCode);
+       return sb.toString();    
+    }
+    
     public String getCode() {
         return code;
     }

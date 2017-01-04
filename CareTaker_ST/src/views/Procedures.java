@@ -7,54 +7,52 @@ package views;
 
 import dtos.MaterialDTO;
 import dtos.NecessidadeDTO;
+import dtos.ProcedimentoDTO;
 import dtos.UtenteDTO;
 import java.security.MessageDigest;
 import javax.ws.rs.client.Client;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.LoginBean;
 import static org.glassfish.jersey.client.authentication.HttpAuthenticationFeature.HTTP_AUTHENTICATION_BASIC_PASSWORD;
 import static org.glassfish.jersey.client.authentication.HttpAuthenticationFeature.HTTP_AUTHENTICATION_BASIC_USERNAME;
-import views.Materials.Mode;
 
 /**
  *
  * @author lztd1
  */
-public class Necessidades extends javax.swing.JDialog {
+public class Procedures extends javax.swing.JDialog {
 
     
     
     /**
      * Creates new form Index
      */
-
-   
+    NecessidadeDTO necessidade;
     UtenteDTO utente;
     
-    public Necessidades(javax.swing.JDialog parent, boolean modal, UtenteDTO dto) {
+    public Procedures(javax.swing.JDialog parent, boolean modal, NecessidadeDTO dto, UtenteDTO utente) {
         super(parent, modal);
         initComponents();
-        utente = dto;
+        necessidade = dto;
+        utente = utente;
         atualizarLista();
-        jLabel5.setText(utente.getName());
     }
     private void atualizarLista() {
-        List<MaterialDTO> materials = null;    
+        List<ProcedimentoDTO> proceds = null;    
         DefaultListModel model=new DefaultListModel();
         jList1.setModel(model);
         try{        
-            materials = LoginBean.INSTANCE.getClient().target(LoginBean.INSTANCE.getBaseUri())
-            .path("/necessities/patient/"+utente.getCode())
+            proceds = LoginBean.INSTANCE.getClient().target(LoginBean.INSTANCE.getBaseUri())
+            .path("/procedures/necessity/"+necessidade.getCode())
             .request(MediaType.APPLICATION_XML)
-            .get(new GenericType<List<MaterialDTO>>() {
+            .get(new GenericType<List<ProcedimentoDTO>>() {
             });
              model=new DefaultListModel();
-            for(MaterialDTO m : materials){
+            for(ProcedimentoDTO m : proceds){
                 model.addElement(m);
             }
             jList1.setModel(model);
@@ -80,9 +78,7 @@ public class Necessidades extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -118,20 +114,17 @@ public class Necessidades extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Patient:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel3.setText("Procedures");
 
-        jLabel5.setText("jLabel5");
-
-        jLabel6.setText("Necessities");
-
-        jButton3.setText("Necessity Material");
+        jButton3.setText("Procedures Details");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Necessity Procedure");
+        jButton6.setText("Procedures New");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -145,34 +138,26 @@ public class Necessidades extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addGap(114, 114, 114)
-                                .addComponent(jLabel6)
-                                .addGap(199, 199, 199)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(jLabel3)
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -188,32 +173,33 @@ public class Necessidades extends javax.swing.JDialog {
        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         NecessidadeDTO v=(NecessidadeDTO) jList1.getSelectedValue();
-            if(v!= null){
-                Materials necs = new Materials(this,true,Mode.necessity,null);
-                this.setVisible(false);
-                necs.mostrar();
-                this.setVisible(true); 
-            }     
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-JOptionPane.showMessageDialog(this,
-    "Select a Necessity then Click in one button below",
-    "",
-    JOptionPane.WARNING_MESSAGE);       
+      if (evt.getClickCount()==2) {
+           ProcedimentoDTO v=(ProcedimentoDTO) jList1.getSelectedValue();
+            if(v!=null){
+                Procedure m = new Procedure(this, true, v);
+                this.setVisible(false);
+                m.mostrar();
+                this.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_jList1MouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
-           NecessidadeDTO v=(NecessidadeDTO) jList1.getSelectedValue();
-            if(v!= null){
-                Procedures necs = new Procedures(this,true,v,utente);
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       ProcedimentoDTO v=(ProcedimentoDTO) jList1.getSelectedValue();
+            if(v!=null){
+                Procedure m = new Procedure(this, true, v);
                 this.setVisible(false);
-                necs.mostrar();
-                this.setVisible(true); 
-            }   
+                m.mostrar();
+                this.setVisible(true);
+            }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        ProcedureCreate m = new ProcedureCreate(this, true, necessidade, utente);
+                this.setVisible(false);
+                m.mostrar();
+                this.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
@@ -232,9 +218,7 @@ JOptionPane.showMessageDialog(this,
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<Object> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
