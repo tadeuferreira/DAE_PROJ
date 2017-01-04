@@ -97,10 +97,10 @@ public class UtenteBean implements Serializable {
         }
     } 
     
-    public Utente getUtente(String code){
+    public UtenteDTO getUtente(String code){
         try{
             Utente utente = em.find(Utente.class, code);
-            return utente;
+            return utenteToDTO(utente);
         }catch(Exception e){
             throw new EJBException(e.getMessage());
         }

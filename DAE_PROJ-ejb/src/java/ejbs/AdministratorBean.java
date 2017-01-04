@@ -86,10 +86,10 @@ public class AdministratorBean {
         }
     } 
     
-    public Administrator getAdministrator(String username){
+    public AdministratorDTO getAdministrator(String username){
         try{
             Administrator administrator = em.find(Administrator.class, username);
-            return administrator;
+            return adminToDTO(administrator);
         }catch(Exception e){
             throw new EJBException(e.getMessage());
         }

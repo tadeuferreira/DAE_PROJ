@@ -86,6 +86,12 @@ public class AdministratorManager implements Serializable {
     private UtenteDTO currentUtente;
     private NecessidadeDTO currentNecessidade;
     
+    private String searchAdminUsername;
+    private String searchProfUsername;
+    private String searchCuidadorUsername;
+    private String searchUtenteCode;
+    private String searchMaterialCode;
+    
     private UIComponent component;
     
     public AdministratorManager() {
@@ -160,6 +166,19 @@ public class AdministratorManager implements Serializable {
         }
     }
     
+    public String searchCuidador(){
+        try{
+            currentCuidador = cuidadorBean.getCuidador(searchCuidadorUsername);
+            return "/faces/professional_admin/professional_admin_cuidadores_details";
+        
+        }catch (Exception e){
+            LOGGER.warning("Error: problem in method getCuidador");
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        
+        }
+        return null;
+    }
+    
     ///////ADMIN///////
     public String createAdministrator() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
@@ -215,6 +234,19 @@ public class AdministratorManager implements Serializable {
         }
     }
     
+    public String searchAdministrator(){
+        try{
+            currentAdmin = administratorBean.getAdministrator(searchAdminUsername);
+            return "admin_admins_details?faces-redirect=true";
+        
+        }catch (Exception e){
+            LOGGER.warning("Error: problem in method getAdministrator");
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        
+        }
+        return null;
+    }
+    
     ///PROFISSIONAL DE SAUDE///
     public String createProfissionalSaude() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
@@ -268,6 +300,19 @@ public class AdministratorManager implements Serializable {
         }catch(Exception e){
             logger.warning("Problem removing student in method removeProfissionalSaude()");
         }
+    }
+    
+    public String searchProfessional(){
+        try{
+            currentProfissionalSaude = profissionalSaudeBean.getProfissional(searchProfUsername);
+            return "admin_professionals_details?faces-redirect=true";
+        
+        }catch (Exception e){
+            LOGGER.warning("Error: problem in method getProfessional");
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        
+        }
+        return null;
     }
     
     ///MATERIAL///
@@ -365,6 +410,19 @@ public class AdministratorManager implements Serializable {
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
+    }
+    
+    public String searchMaterial(){
+        try{
+            currentMaterial = materialBean.getMaterial(Integer.parseInt(searchMaterialCode));
+            return "/faces/professional_admin/professional_admin_materials_details";
+        
+        }catch (Exception e){
+            LOGGER.warning("Error: problem in method getMaterial");
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        
+        }
+        return null;
     }
     
     ///UTENTE///
@@ -472,6 +530,19 @@ public class AdministratorManager implements Serializable {
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
+    }
+    
+    public String searchUtente(){
+        try{
+            currentUtente = utenteBean.getUtente(searchUtenteCode);
+            return "/faces/professional_admin/professional_admin_utentes_details";
+        
+        }catch (Exception e){
+            LOGGER.warning("Error: problem in method getUtente");
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
+        
+        }
+        return null;
     }
     
     ///NECESSIDADES///
@@ -718,6 +789,30 @@ public class AdministratorManager implements Serializable {
             }
             return "/error?faces-redirect=true";
     }
+
+    public String getSearchCuidadorUsername() {
+        return searchCuidadorUsername;
+    }
+
+    public void setSearchCuidadorUsername(String searchCuidadorUsername) {
+        this.searchCuidadorUsername = searchCuidadorUsername;
+    }
+
+    public String getSearchUtenteCode() {
+        return searchUtenteCode;
+    }
+
+    public void setSearchUtenteCode(String searchUtenteCode) {
+        this.searchUtenteCode = searchUtenteCode;
+    }
+
+    public String getSearchMaterialCode() {
+        return searchMaterialCode;
+    }
+
+    public void setSearchMaterialCode(String searchMaterialCode) {
+        this.searchMaterialCode = searchMaterialCode;
+    }
     
     public AdministratorBean getAdministratorBean() {
         return administratorBean;
@@ -774,6 +869,14 @@ public class AdministratorManager implements Serializable {
     
     public void setCuidadorBean(CuidadorBean cuidadorBean) {
         this.cuidadorBean = cuidadorBean;
+    }
+
+    public String getSearchAdminUsername() {
+        return searchAdminUsername;
+    }
+
+    public void setSearchAdminUsername(String searchAdminUsername) {
+        this.searchAdminUsername = searchAdminUsername;
     }
     
     public MaterialBean getMaterialBean() {
@@ -846,6 +949,14 @@ public class AdministratorManager implements Serializable {
     
     public void setComponent(UIComponent component) {
         this.component = component;
+    }
+
+    public String getSearchProfUsername() {
+        return searchProfUsername;
+    }
+
+    public void setSearchProfUsername(String searchProfUsername) {
+        this.searchProfUsername = searchProfUsername;
     }
     
     public NecessidadeBean getNecessidadeBean() {
