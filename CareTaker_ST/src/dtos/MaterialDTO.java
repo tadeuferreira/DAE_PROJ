@@ -27,12 +27,22 @@ public class MaterialDTO implements Serializable {
     
     }
 
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder();
+       sb.append("Code: "+code);
+       sb.append(" Name: "+name);
+       sb.append(" Type: "+type);
+       return sb.toString();
+    }
+    
+
     public MaterialDTO(
             String code,
             
             String name,
             String type,
-            String quantity) {
+            String description) {
         
         this.code = code;
         this.name = name;

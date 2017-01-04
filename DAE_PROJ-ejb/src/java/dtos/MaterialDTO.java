@@ -32,7 +32,7 @@ public class MaterialDTO implements Serializable {
             
             String name,
             String type,
-            String quantity) {
+            String description) {
         
         this.code = code;
         this.name = name;

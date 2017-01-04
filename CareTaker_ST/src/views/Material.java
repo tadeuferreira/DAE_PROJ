@@ -17,13 +17,14 @@ public class Material extends javax.swing.JDialog {
      * Creates new form Material
      */
     MaterialDTO mat;
-    public Material(java.awt.Frame parent, boolean modal, MaterialDTO mat) {
+    public Material(javax.swing.JDialog parent, boolean modal, MaterialDTO mat) {
         super(parent, modal);
         initComponents();
         this.mat = mat;
         jLabel5.setText(mat.getCode());
-        jLabel6.setText(mat.getCode());
-        jLabel7.setText(mat.getCode());
+        jLabel6.setText(mat.getName());
+        jLabel7.setText(mat.getType());
+        jTextArea1.setText(mat.getDescription());
     }
 
     /**
@@ -91,17 +92,18 @@ public class Material extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel6)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel7))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -141,7 +143,10 @@ public class Material extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    public void mostrar() {
+        this.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -102,6 +102,11 @@ public class Necessidades extends javax.swing.JDialog {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Back");
@@ -180,6 +185,18 @@ public class Necessidades extends javax.swing.JDialog {
                 this.setVisible(true); 
             }     
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        if (evt.getClickCount()==2) {
+           NecessidadeDTO v=(NecessidadeDTO) jList1.getSelectedValue();
+            if(v!= null){
+                Materials necs = new Materials(this,true,Mode.necessity,null);
+                this.setVisible(false);
+                necs.mostrar();
+                this.setVisible(true); 
+            }   
+        }        
+    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
