@@ -69,13 +69,13 @@ public class ConfigBean {
            professionalBean.createProfissionalSaude("454324", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            professionalBean.createProfissionalSaude("978907", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
           
-           materialBean.createMaterial(123456, "Pomada", "tipo 1", "20");
-           materialBean.createMaterial(456689, "Penso", "tipo 2", "45");
-           materialBean.createMaterial(234789, "Gotas", "tipo 3", "67");
-           materialBean.createMaterial(123890, "Desinfectante", "tipo 3", "34");
-           materialBean.createMaterial(765345, "Seringa", "tipo 5", "20");
-           materialBean.createMaterial(123432, "Muletas", "tipo 8", "45");
-           materialBean.createMaterial(123549, "Cadeira de rodas", "tipo 8", "67");
+           materialBean.createMaterial("123456", "Pomada", "tipo 1", "20");
+           materialBean.createMaterial("456689", "Penso", "tipo 2", "45");
+           materialBean.createMaterial("234789", "Gotas", "tipo 3", "67");
+           materialBean.createMaterial("123890", "Desinfectante", "tipo 3", "34");
+           materialBean.createMaterial("765345", "Seringa", "tipo 5", "20");
+           materialBean.createMaterial("123432", "Muletas", "tipo 8", "45");
+           materialBean.createMaterial("123549", "Cadeira de rodas", "tipo 8", "67");
            
            utenteBean.createUtente("678867", "Rogerio");
            utenteBean.createUtente("978695", "Miguel");
@@ -96,23 +96,23 @@ public class ConfigBean {
            utenteBean.enrollUtenteToCuidador("c1", "978695");
            utenteBean.enrollUtenteToCuidador("c1", "456372");
            
-           materialBean.associateMaterialtoCuidador("c1", 123456);
-           materialBean.associateMaterialtoCuidador("c1", 456689);
-           materialBean.associateMaterialtoCuidador("c1", 456689);
-           materialBean.associateMaterialtoCuidador("24355478", 123456);
-           materialBean.associateMaterialtoCuidador("56745612", 123890);
-           materialBean.associateMaterialtoCuidador("24355478", 234789);
+           materialBean.associateMaterialtoCuidador("c1", "123456");
+           materialBean.associateMaterialtoCuidador("c1", "456689");
+           materialBean.associateMaterialtoCuidador("c1", "456689");
+           materialBean.associateMaterialtoCuidador("24355478", "123456");
+           materialBean.associateMaterialtoCuidador("56745612", "123890");
+           materialBean.associateMaterialtoCuidador("24355478", "234789");
            
            
-           necessidadeBean.createNecessidade(1, "massagem", "nos pes", "453983");
-           necessidadeBean.createNecessidade(2, "massagem", "nos ombros", "453983");
-           necessidadeBean.createNecessidade(3, "massagem", "nos costas", "453983");
-           necessidadeBean.createNecessidade(4, "massagem", "nos pernas", "453983");
+           necessidadeBean.createNecessidade("1", "massagem", "nos pes", "453983");
+           necessidadeBean.createNecessidade("2", "massagem", "nos ombros", "453983");
+           necessidadeBean.createNecessidade("3", "massagem", "nos costas", "453983");
+           necessidadeBean.createNecessidade("4", "massagem", "nos pernas", "453983");
            
-           materialBean.associateMaterialToNecessidade(1, 123456);
-           materialBean.associateMaterialToNecessidade(2, 234789);
-           materialBean.associateMaterialToNecessidade(3, 123432);
-           materialBean.associateMaterialToNecessidade(4, 123456);
+           materialBean.associateMaterialToNecessidade("1", "123456");
+           materialBean.associateMaterialToNecessidade("2", "234789");
+           materialBean.associateMaterialToNecessidade("3", "123432");
+           materialBean.associateMaterialToNecessidade("4", "123456");
            
            utenteBean.enrollUtenteToCuidador("45645634", "453983");
            utenteBean.enrollUtenteToCuidador("45645634", "978695");

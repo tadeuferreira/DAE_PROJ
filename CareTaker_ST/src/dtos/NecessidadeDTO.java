@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class NecessidadeDTO implements Serializable{
     
-    protected int number;
+    protected String code;
     protected String name;
     protected String description;
     
@@ -24,7 +24,7 @@ public class NecessidadeDTO implements Serializable{
      @Override
     public String toString(){
        StringBuilder sb = new StringBuilder();
-       sb.append("Number: "+number);
+       sb.append("Code: "+code);
        sb.append(" Name: "+name);
        sb.append(" Description: "+description);
        return sb.toString();
@@ -37,18 +37,18 @@ public class NecessidadeDTO implements Serializable{
             String description
             ) {
         
-        this.number = number;
+        this.code = code;
         this.name = name;
         this.description = description;
        
     }
 
-    public int getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

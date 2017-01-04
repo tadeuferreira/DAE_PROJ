@@ -49,7 +49,7 @@ public class MaterialBean implements Serializable{
     
  
     
-    public void createMaterial(int code, String name, String type, String quantity) 
+    public void createMaterial(String code, String name, String type, String quantity) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
         
         try{  
@@ -70,7 +70,7 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void removeMaterial(int code) {
+    public void removeMaterial(String code) {
         try{
             Material material = em.find(Material.class, code);
             em.remove(material);
@@ -80,7 +80,7 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void update(int code, String name, String type, String quantity) {
+    public void update(String code, String name, String type, String quantity) {
         try{
             Material material = em.find(Material.class, code);
             if(material == null){
@@ -115,7 +115,7 @@ public class MaterialBean implements Serializable{
     @RolesAllowed({"Cuidador"})
     @Path("necessity/{code}")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public List<MaterialDTO> getNecessidadeMateriais(@PathParam("code") int code) throws EntityDoesNotExistException {
+    public List<MaterialDTO> getNecessidadeMateriais(@PathParam("code") String code) throws EntityDoesNotExistException {
         List<MaterialDTO> mats = null;
         try {
          Necessidade necessidade = em.find(Necessidade.class, code);
@@ -140,7 +140,7 @@ public class MaterialBean implements Serializable{
         }
     } 
     
-    public Material getMaterial(int code){
+    public Material getMaterial(String code){
         try{
             Material material = em.find(Material.class, code);
             return material;
@@ -154,7 +154,7 @@ public class MaterialBean implements Serializable{
                               material.getCode(),
                               material.getName(),
                               material.getType(),
-                              material.getQuantity());
+                              material.getDescription());
     }
     
     List<MaterialDTO> materialsToDTOs(List<Material> materials){
@@ -165,7 +165,7 @@ public class MaterialBean implements Serializable{
         return dtos;
     }
     
-    public void associateMaterialtoCuidador(String username, int materialCode)
+    public void associateMaterialtoCuidador(String username, String materialCode)
             throws EntityDoesNotExistException, CuidadorAssociatedException, MaterialAssociatedException{
         try {
 
@@ -213,7 +213,7 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void unrollMaterial(String username, int materialCode) 
+    public void unrollMaterial(String username, String materialCode) 
             throws EntityDoesNotExistException, MaterialNotEnrolledException {
         try {
             Material material = em.find(Material.class, materialCode);
@@ -258,11 +258,11 @@ public class MaterialBean implements Serializable{
         }
     } 
     
-    public void associateMaterialToNecessidade(int number, int code)
+    public void associateMaterialToNecessidade(String codeNec, String code)
             throws EntityDoesNotExistException, NecessidadeAssociatedException, MaterialAssociatedException{
         try {
 
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, codeNec);
             if (necessidade == null) {
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }
@@ -312,9 +312,9 @@ public class MaterialBean implements Serializable{
         }
     }*/
     
-    public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(int number) throws EntityDoesNotExistException{
+    public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(String code) throws EntityDoesNotExistException{
         try {
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, code);
             if( necessidade == null){
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }            
@@ -327,7 +327,7 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void unrollMaterialOfNecessidade(int number, int code) 
+    public void unrollMaterialOfNecessidade(String codeNec, String code) 
             throws EntityDoesNotExistException, MaterialNotEnrolledException {
         try {
             Material material = em.find(Material.class, code);
@@ -335,7 +335,7 @@ public class MaterialBean implements Serializable{
                 throw new EntityDoesNotExistException("There is no material with that code.");
             }            
             
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, codeNec);
             if(necessidade == null){
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }
@@ -354,9 +354,9 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public List<MaterialDTO> getUnrolledMaterialsOfNecessidade(int number) throws EntityDoesNotExistException{
+    public List<MaterialDTO> getUnrolledMaterialsOfNecessidade(String code) throws EntityDoesNotExistException{
         try {
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, code);
             if( necessidade == null){
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }            

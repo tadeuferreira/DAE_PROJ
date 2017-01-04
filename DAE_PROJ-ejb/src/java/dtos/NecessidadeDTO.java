@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NecessidadeDTO implements Serializable{
     
-    protected int number;
+    protected String code;
     protected String name;
     protected String description;
     
@@ -28,23 +28,23 @@ public class NecessidadeDTO implements Serializable{
     }
 
     public NecessidadeDTO(
-            int number,
+            String code,
             String name,
             String description
             ) {
         
-        this.number = number;
+        this.code = code;
         this.name = name;
         this.description = description;
        
     }
 
-    public int getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setCode(String number) {
+        this.code = number;
     }
 
     public String getName() {

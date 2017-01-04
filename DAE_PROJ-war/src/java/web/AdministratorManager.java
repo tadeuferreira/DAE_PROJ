@@ -273,7 +273,7 @@ public class AdministratorManager implements Serializable {
     ///MATERIAL///
     public String createMaterial() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            materialBean.createMaterial(newMaterial.getCode(), newMaterial.getName(), newMaterial.getType(), newMaterial.getQuantity());
+            materialBean.createMaterial(newMaterial.getCode(), newMaterial.getName(), newMaterial.getType(), newMaterial.getDescription());
             clearNewMaterial();
             return goToIndex();
         }catch (EntityExistsException | EntityDoesNotExistException e){
@@ -304,7 +304,7 @@ public class AdministratorManager implements Serializable {
                     currentMaterial.getCode(),
                     currentMaterial.getName(),
                     currentMaterial.getType(),
-                    currentMaterial.getQuantity());
+                    currentMaterial.getDescription());
            return goToIndex();
             
         }catch(Exception e){
@@ -316,8 +316,8 @@ public class AdministratorManager implements Serializable {
     public void removeMaterial(ActionEvent event){
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            int id = Integer.parseInt(param.getValue().toString());
-            materialBean.removeMaterial(id);
+            String code = param.getValue().toString();
+            materialBean.removeMaterial(code);
         }catch(Exception e){
             logger.warning("Problem removing material in method removeMaterial()");
         }
@@ -346,7 +346,7 @@ public class AdministratorManager implements Serializable {
     public void enrollMaterial(ActionEvent event) {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            int code = Integer.parseInt(param.getValue().toString());
+            String code = param.getValue().toString();
             materialBean.associateMaterialtoCuidador(currentCuidador.getUsername(), code);
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
@@ -358,7 +358,7 @@ public class AdministratorManager implements Serializable {
     public void unrollMaterial(ActionEvent event) {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            int code = Integer.parseInt(param.getValue().toString());
+            String code = param.getValue().toString();
             materialBean.unrollMaterial(currentCuidador.getUsername(), code);
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
@@ -478,9 +478,7 @@ public class AdministratorManager implements Serializable {
     
     public String createNecessidade() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
-            System.out.println("1.1");
-            necessidadeBean.createNecessidade(newNecessidade.getNumber(), newNecessidade.getName(), newNecessidade.getDescription(), currentUtente.getCode());
-            System.out.println("1.2");
+            necessidadeBean.createNecessidade(newNecessidade.getCode(), newNecessidade.getName(), newNecessidade.getDescription(), currentUtente.getCode());
             clearNewNecessidade();
             return "/faces/professional_admin/professional_admin_utentes_update";
         }catch (EntityExistsException | EntityDoesNotExistException e){
@@ -494,7 +492,7 @@ public class AdministratorManager implements Serializable {
     
     public List<MaterialDTO> getCurrentNecessidadeMateriais() {
         try {
-            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getNumber());
+            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getCode());
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
@@ -517,7 +515,7 @@ public class AdministratorManager implements Serializable {
     public String updateNecessidade(){
         try{
             necessidadeBean.update(
-                    currentNecessidade.getNumber(),
+                    currentNecessidade.getCode(),
                     currentNecessidade.getName(),
                     currentNecessidade.getDescription()
             );
@@ -532,8 +530,8 @@ public class AdministratorManager implements Serializable {
     public void removeNecessidade(ActionEvent event){
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("number");
-            int number = Integer.parseInt(param.getValue().toString());
-            necessidadeBean.removeNecessidade(number);
+            String code = param.getValue().toString();
+            necessidadeBean.removeNecessidade(code);
         }catch(Exception e){
             logger.warning("Problem removing necessidade in method removeNecessidade()");
         }
@@ -600,7 +598,7 @@ public class AdministratorManager implements Serializable {
     */
     public List<MaterialDTO> getUnrolledMateriaisOfNecessidade() {
         try {
-            return materialBean.getUnrolledMaterialsOfNecessidade(currentNecessidade.getNumber());
+            return materialBean.getUnrolledMaterialsOfNecessidade(currentNecessidade.getCode());
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
@@ -611,7 +609,7 @@ public class AdministratorManager implements Serializable {
     
     public List<MaterialDTO> getEnrolledMateriaisOfNecessidade() {
         try {
-            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getNumber());
+            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getCode());
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
@@ -624,9 +622,9 @@ public class AdministratorManager implements Serializable {
     public void enrollMaterialOfNecessidade(ActionEvent event) {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            int code = Integer.parseInt(param.getValue().toString());
+            String code = param.getValue().toString();
             System.out.println("web.AdministratorManager.enrollMaterialOfNecessidade() ->  " + code);
-            materialBean.associateMaterialToNecessidade(currentNecessidade.getNumber(), code);
+            materialBean.associateMaterialToNecessidade(currentNecessidade.getCode(), code);
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
@@ -637,8 +635,8 @@ public class AdministratorManager implements Serializable {
     public void unrollMaterialOfNecessidade(ActionEvent event) {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
-            int code = Integer.parseInt(param.getValue().toString());
-            materialBean.unrollMaterialOfNecessidade(currentNecessidade.getNumber(), code);
+            String code = param.getValue().toString();
+            materialBean.unrollMaterialOfNecessidade(currentNecessidade.getCode(), code);
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {

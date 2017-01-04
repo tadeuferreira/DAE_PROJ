@@ -13,7 +13,7 @@
                 <h:outputLabel for="number" value="Number: " />
                 <h:outputText 
                     id="number"
-                    value="#{administratorManager.currentNecessidade.number}"/>
+                    value="#{administratorManager.currentNecessidade.code}"/>
                 <br></br>
                 <h:outputLabel for="name" value="Name: " />
                 <h:inputText 
@@ -82,7 +82,7 @@
                         <f:facet name="header">
                             <h:outputText value="Quantity" />
                         </f:facet>
-                        <h:outputText value="#{material.quantity}" />
+                        <h:outputText value="#{material.description}" />
                     </h:column> 
                     
                     <h:column>
@@ -136,7 +136,7 @@
                         <f:facet name="header">
                             <h:outputText value="Quantity" />
                         </f:facet>
-                        <h:outputText value="#{material.quantity}" />
+                        <h:outputText value="#{material.description}" />
                     </h:column> 
                     
                     <h:column>

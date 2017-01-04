@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
 public class Necessidade implements Serializable {
 
     @Id
-    int number;
+    String code;
     @NotNull
     String name;
     @NotNull
@@ -48,20 +48,20 @@ public class Necessidade implements Serializable {
         this.materiais = new ArrayList();
     }
     
-    public Necessidade(int number, String name, String description, Utente utente){
-        this.number = number;
+    public Necessidade(String code, String name, String description, Utente utente){
+        this.code = code;
         this.name = name;
         this.description = description;
         this.utente = utente;
         this.materiais = new ArrayList();
     }
 
-    public int getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setCode(String number) {
+        this.code = number;
     }
 
     public String getName() {
