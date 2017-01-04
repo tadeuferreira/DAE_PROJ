@@ -209,7 +209,7 @@ public class MaterialBean implements Serializable{
         }
     } 
     
-    public void associateMaterialToNecessidade(int number, int materialCode)
+    public void associateMaterialToNecessidade(int number, int code)
             throws EntityDoesNotExistException, NecessidadeAssociatedException, MaterialAssociatedException{
         try {
 
@@ -218,7 +218,7 @@ public class MaterialBean implements Serializable{
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }
 
-            Material material = em.find(Material.class, materialCode);
+            Material material = em.find(Material.class, code);
             if (material == null) {
                 throw new EntityDoesNotExistException("There is no material with that code.");
             }
@@ -278,10 +278,10 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void unrollMaterialOfNecessidade(int number, int materialCode) 
+    public void unrollMaterialOfNecessidade(int number, int code) 
             throws EntityDoesNotExistException, MaterialNotEnrolledException {
         try {
-            Material material = em.find(Material.class, materialCode);
+            Material material = em.find(Material.class, code);
             if(material == null){
                 throw new EntityDoesNotExistException("There is no material with that code.");
             }            
@@ -312,7 +312,7 @@ public class MaterialBean implements Serializable{
                 throw new EntityDoesNotExistException("There is no necessidade with that number.");
             }            
             List<Material> materials = (List<Material>) em.createNamedQuery("findAllMaterials").getResultList();
-            List<Material> enrolled = em.find(Necessidade.class, number).getMateriais();
+            List<Material> enrolled = necessidade.getMateriais();
             materials.removeAll(enrolled);
             
             return materialsToDTOs(materials);

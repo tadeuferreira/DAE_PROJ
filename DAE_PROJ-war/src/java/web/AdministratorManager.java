@@ -613,7 +613,6 @@ public class AdministratorManager implements Serializable {
         try {
             return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getNumber());
         } catch (EntityDoesNotExistException e) {
-             System.out.println("Execption enrolled 1 Necessidades");
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
              System.out.println(e.toString());
@@ -626,6 +625,7 @@ public class AdministratorManager implements Serializable {
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
             int code = Integer.parseInt(param.getValue().toString());
+            System.out.println("web.AdministratorManager.enrollMaterialOfNecessidade() ->  " + code);
             materialBean.associateMaterialToNecessidade(currentNecessidade.getNumber(), code);
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
