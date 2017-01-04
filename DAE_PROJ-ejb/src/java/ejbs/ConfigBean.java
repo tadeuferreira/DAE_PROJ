@@ -125,8 +125,7 @@ public class ConfigBean {
                MaterialAssociatedException |
                NecessidadeAssociatedException |
                UtenteAssociatedException e){
-
-          System.err.println("Error:" + e.getMessage());
+           System.err.println("Error:" + e.getMessage());
        }
 
            List<AdministratorDTO> administrators = administratorBean.getAllAdministrators();
