@@ -49,7 +49,7 @@ public class MaterialBean implements Serializable{
     
  
     
-    public void createMaterial(String code, String name, String type, String quantity) 
+    public void createMaterial(String code, String name, String type, String description) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
         
         try{  
@@ -57,7 +57,7 @@ public class MaterialBean implements Serializable{
                throw new EntityAlreadyExistsException("A material whith that code already exists");
             }
             
-            Material material = new Material(code, name, type, quantity);
+            Material material = new Material(code, name, type, description);
             em.persist(material);
        // EntityDoesNotExistException missing
         }catch (EntityAlreadyExistsException e){
@@ -80,13 +80,15 @@ public class MaterialBean implements Serializable{
         }
     }
     
-    public void update(String code, String name, String type, String quantity) {
+    public void update(String code, String name, String type, String description) {
         try{
             Material material = em.find(Material.class, code);
             if(material == null){
                 return;
             }
             material.setName(name);
+            material.setType(type);
+            material.setDescription(description);
             em.merge(material);
         }catch(Exception e){
             throw new EJBException(e.getMessage());
