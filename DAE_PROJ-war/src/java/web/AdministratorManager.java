@@ -607,7 +607,7 @@ public class AdministratorManager implements Serializable {
     
     public void removeNecessidade(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("code");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("necessidadeCode");
             String code = param.getValue().toString();
             necessidadeBean.removeNecessidade(code);
         }catch(Exception e){

@@ -26,20 +26,17 @@
                 <h:message for="name" errorStyle="color: red" />                        
 
                 <br></br>
-        <br></br>
-        <br></br>
                 <h:commandButton
                     id="submit"
                     value="Update"
                     action="#{administratorManager.updateUtente()}" />
                 <h:message for="submit" style="color: red"/>
-            </h:panelGrid>  
-
-        </h:form>
-        
-              <br/>
-                
-                <h:dataTable
+            </h:panelGrid> 
+            
+            
+            </h:form>
+            <br></br>
+              <h:dataTable
                     var="necessidade"
                     summary="List of all associated necessidades"
                     value="#{administratorManager.currentUtenteNecessidades}"
@@ -86,22 +83,26 @@
                     </h:commandLink>
                     &nbsp;
                     <h:commandLink value="Remove" actionListener="#{administratorManager.removeNecessidade}">
-                        <f:param name="code" id="code" value="#{necessidade.code}" />
+                        <f:param name="necessidadeCode" id="necessidadeCode" value="#{necessidade.code}" />
                     </h:commandLink>
                 </h:form>
             </h:column>   
-
-        </h:dataTable>
+                    
+                    </h:dataTable>
+              <br></br>
    
+
+        
+
+              <h:form>
+                <br/>
+                <h:outputLabel value="New Necessidade" />
                 <br/>
                 <br/>
-                <h:outputLabel value="New Necessidade"></h:outputLabel>
-                <br/>
-                <br/>
-           <h:form>
+           
         <h:panelGrid columns="3">
 
-            <h:outputLabel for="Code" value="Code " />
+            <h:outputLabel for="Code" value="Code: " />
             <h:inputText 
                     id="code"
                     size="20"
@@ -139,8 +140,11 @@
                     action="#{administratorManager.createNecessidade}" />
                 <h:message for="submit" style="color: red"/>
              
-         </h:panelGrid>  
-            </h:form>
+         </h:panelGrid> 
+              
+              </h:form>
+              
+              
          <h:form>                  
             <h:commandLink
                 id="return"

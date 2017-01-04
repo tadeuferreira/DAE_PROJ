@@ -34,16 +34,16 @@
                     value="#{administratorManager.currentMaterial.type}" />
                 <h:message for="type" errorStyle="color: red" />
 
-                <h:outputLabel for="quantity" value="Quantity: " />
+                <h:outputLabel for="description" value="Description: " />
                 <h:inputText
-                    id="quantity"
+                    id="description"
                     size="10"
                     required="true"
-                    requiredMessage="Error: Quantity cannot be empty."                            
+                    requiredMessage="Error: description cannot be empty."                            
                     value="#{administratorManager.currentMaterial.description}" >
                   
                 </h:inputText>    
-                <h:message for="quantity" errorStyle="color: red" />
+                <h:message for="description" errorStyle="color: red" />
 
                 <br></br>
 
