@@ -6,6 +6,8 @@
 package ejbs;
 
 import dtos.NecessidadeDTO;
+import dtos.UtenteDTO;
+import entities.Cuidador;
 import entities.Necessidade;
 import entities.Utente;
 import exceptions.EntityAlreadyExistsException;
@@ -18,18 +20,26 @@ import exceptions.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
 @Stateless
+@Path("/necessities")
 public class NecessidadeBean implements Serializable{
 
     @PersistenceContext
@@ -216,4 +226,24 @@ public class NecessidadeBean implements Serializable{
             throw new EJBException(e.getMessage());
         }
     }*/
+    
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("patient/{code}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<NecessidadeDTO> getUtenteNecessidades(@PathParam("code") String code) throws EntityDoesNotExistException {
+        List<NecessidadeDTO> necs = null;
+        try {
+         Utente utente = em.find(Utente.class, code);
+         if(utente == null)
+             throw new EntityDoesNotExistException("cant find utente");
+         List<Necessidade> ns = utente.getNecessidades();
+         necs = necessidadesToDTOs(ns);
+        return necs;
+        } catch (EntityDoesNotExistException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
 }

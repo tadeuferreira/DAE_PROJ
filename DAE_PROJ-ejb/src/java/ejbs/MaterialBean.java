@@ -21,11 +21,19 @@ import exceptions.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -33,10 +41,13 @@ import javax.validation.ConstraintViolationException;
  */
 
 @Stateless
+@Path("/materials")
 public class MaterialBean implements Serializable{
 
     @PersistenceContext
     private EntityManager em;
+    
+ 
     
     public void createMaterial(int code, String name, String type, String quantity) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
@@ -81,8 +92,46 @@ public class MaterialBean implements Serializable{
             throw new EJBException(e.getMessage());
         }
     }
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("caretaker/{username}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<MaterialDTO> getCuidadorMateriais(@PathParam("username") String username) throws EntityDoesNotExistException {
+        List<MaterialDTO> mats = null;
+        try {
+         Cuidador cuidador = em.find(Cuidador.class, username);
+         if(cuidador == null)
+             throw new EntityDoesNotExistException("cant find cuidador");
+         List<Material> mt = cuidador.getMaterials();
+         mats = materialsToDTOs(mt);
+        return mats;
+        } catch (EntityDoesNotExistException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("necessity/{code}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<MaterialDTO> getNecessidadeMateriais(@PathParam("code") int code) throws EntityDoesNotExistException {
+        List<MaterialDTO> mats = null;
+        try {
+         Necessidade necessidade = em.find(Necessidade.class, code);
+         if(necessidade == null)
+             throw new EntityDoesNotExistException("cant find necessidade");
+         List<Material> mt = necessidade.getMateriais();
+         mats = materialsToDTOs(mt);
+        return mats;
+        } catch (EntityDoesNotExistException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
     
-    public List<MaterialDTO> getAllMaterials(){
+     public List<MaterialDTO> getAllMaterials(){
         try{
         List<Material> materials = (List<Material>) em.createNamedQuery("findAllMaterials").getResultList();
         return materialsToDTOs(materials);

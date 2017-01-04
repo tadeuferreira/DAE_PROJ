@@ -23,7 +23,14 @@ public class UtenteDTO implements Serializable{
     
     public UtenteDTO() {
     }    
-    
+     @Override
+    public String toString(){
+       StringBuilder sb = new StringBuilder();
+       sb.append("Code: "+code);
+       sb.append(" Name: "+name);
+       return sb.toString();
+    }
+
     public UtenteDTO(String code, String name) {
         this.code = code;
         this.name = name;

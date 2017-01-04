@@ -5,3 +5,7 @@ dist/
 nbdist/
 .nb-gradle/
 build.xml
+/CareTaker-war/nbproject/private/
+/WebAppCareTaker/nbproject/private/
+/CareWebApplication/nbproject/private/
+/CareTaker_ST/nbproject/private/

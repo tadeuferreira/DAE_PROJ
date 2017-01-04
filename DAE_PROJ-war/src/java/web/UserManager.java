@@ -78,8 +78,6 @@ public class UserManager implements Serializable {
         return "/index_login.xhtml?faces-redirect=true";
     }
     
-    
-    
     public boolean isUserInRole(String role) {
         return (isSomeUserAuthenticated() &&
                 FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role));
