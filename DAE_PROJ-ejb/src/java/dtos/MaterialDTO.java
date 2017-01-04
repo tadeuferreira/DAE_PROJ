@@ -18,17 +18,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MaterialDTO implements Serializable {
      
-    protected int code;
+    protected String code;
     protected String name;
     protected String type;
-    protected String quantity;
+    protected String description;
             
     public MaterialDTO(){
     
     }
 
     public MaterialDTO(
-            int code,
+            String code,
+            
             String name,
             String type,
             String quantity) {
@@ -36,15 +37,15 @@ public class MaterialDTO implements Serializable {
         this.code = code;
         this.name = name;
         this.type = type;
-        this.quantity = quantity;
+        this.description = description;
        
     }
     
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -64,11 +65,11 @@ public class MaterialDTO implements Serializable {
         this.type = type;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

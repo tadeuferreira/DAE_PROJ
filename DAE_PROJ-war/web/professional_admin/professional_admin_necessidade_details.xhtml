@@ -12,7 +12,7 @@
             <h:outputLabel for="number" value="Number: " />
             <h:outputText 
                 id="username"
-                value="#{administratorManager.currentNecessidade.number}"/>
+                value="#{administratorManager.currentNecessidade.code}"/>
 
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
@@ -64,7 +64,7 @@
                         <f:facet name="header">
                             <h:outputText value="Quantity:" />
                         </f:facet>
-                        <h:outputText value="#{material.quantity}" />
+                        <h:outputText value="#{material.description}" />
                     </h:column> 
 
         </h:dataTable>        

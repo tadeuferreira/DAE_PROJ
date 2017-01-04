@@ -30,12 +30,12 @@ import javax.validation.constraints.NotNull;
 public class Material implements Serializable {
 
     @Id
-    private int code;
+    private String code;
     @NotNull
     private String name;  
     @NotNull
     private String type;
-    private String quantity;
+    private String descripion;
     
     @ManyToMany
     @JoinTable(name = "MATERIAL_CUIDADOR",
@@ -58,22 +58,22 @@ public class Material implements Serializable {
         this.necessidades = new ArrayList();
     }
     
-    public Material(int code, String name, String type, String quantity){
+    public Material(String code, String name, String type, String descripion){
         this.code = code;
         this.name = name;
         this.type = type;
-        this.quantity = quantity;
+        this.descripion = descripion;
         
         this.cuidadores = new ArrayList();
         this.necessidades = new ArrayList();
 
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -93,12 +93,12 @@ public class Material implements Serializable {
         this.type = type;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return descripion;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setDescription(String descripion) {
+        this.descripion = descripion;
     }
 
     public void addCuidador(Cuidador cuidador){

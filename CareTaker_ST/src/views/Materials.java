@@ -51,7 +51,7 @@ public class Materials extends javax.swing.JDialog {
         if(mode == Mode.caretaker){
             path = "/materials/caretaker/"+LoginBean.INSTANCE.getUsername();
         }else{
-            path = "/materials/necessity/"+necessidade.getNumber();
+            path = "/materials/necessity/"+necessidade.getCode();
         }
         System.out.println(path);
         try{        

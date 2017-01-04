@@ -45,18 +45,18 @@ public class NecessidadeBean implements Serializable{
     @PersistenceContext
     private EntityManager em;
     
-    public void createNecessidade(int number, String name, String description, String code) 
+    public void createNecessidade(String codeNec, String name, String description, String code) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
         System.out.println("createNecessidade");
         try{  
-            if(em.find(Necessidade.class,number)!= null){
+            if(em.find(Necessidade.class,codeNec)!= null){
                throw new EntityAlreadyExistsException("A necessidade whith that number already exists");
             }
             Utente utente = em.find(Utente.class, code);
             if (utente == null) {
                 throw new EntityDoesNotExistException("There is no utente with that code.");
             }
-            Necessidade necessidade = new Necessidade(number, name, description, utente);
+            Necessidade necessidade = new Necessidade(codeNec, name, description, utente);
             utente.addNecessidade(necessidade);
             em.persist(necessidade);
             em.merge(utente);
@@ -70,9 +70,9 @@ public class NecessidadeBean implements Serializable{
         }
     }
     
-    public void removeNecessidade(int number) {
+    public void removeNecessidade(String code) {
         try{
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, code);
             em.remove(necessidade);
             
         } catch (Exception e) {
@@ -80,9 +80,9 @@ public class NecessidadeBean implements Serializable{
         }
     }
     
-    public void update(int number, String name, String description) {
+    public void update(String code, String name, String description) {
         try{
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, code);
             if(necessidade == null){
                 return;
             }
@@ -103,9 +103,9 @@ public class NecessidadeBean implements Serializable{
         }
     } 
     
-    public Necessidade getNecessidade(int number){
+    public Necessidade getNecessidade(String code){
         try{
-            Necessidade necessidade = em.find(Necessidade.class, number);
+            Necessidade necessidade = em.find(Necessidade.class, code);
             return necessidade;
         }catch(Exception e){
             throw new EJBException(e.getMessage());
@@ -114,7 +114,7 @@ public class NecessidadeBean implements Serializable{
     
     NecessidadeDTO necessidadeToDTO(Necessidade necessidade){
         return new NecessidadeDTO(
-                              necessidade.getNumber(),
+                              necessidade.getCode(),
                               necessidade.getName(),
                               necessidade.getDescription()
                               );

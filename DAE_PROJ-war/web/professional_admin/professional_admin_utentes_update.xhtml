@@ -54,7 +54,7 @@
                         <f:facet name="header">
                             <h:outputText value="Number" />
                         </f:facet>
-                        <h:outputText value="#{necessidade.number}" />
+                        <h:outputText value="#{necessidade.code}" />
                         <!--Falta validar o formato-->
                     </h:column>
 
@@ -86,7 +86,7 @@
                     </h:commandLink>
                     &nbsp;
                     <h:commandLink value="Remove" actionListener="#{administratorManager.removeNecessidade}">
-                        <f:param name="number" id="number" value="#{necessidade.number}" />
+                        <f:param name="number" id="number" value="#{necessidade.code}" />
                     </h:commandLink>
                 </h:form>
             </h:column>   
@@ -107,7 +107,7 @@
                     size="20"
                     required="true"
                     requiredMessage="Error: Number cannot be empty."
-                    value="#{administratorManager.newNecessidade.number}">
+                    value="#{administratorManager.newNecessidade.code}">
         
             </h:inputText>
             <h:message for="code" errorStyle="color: red" />
