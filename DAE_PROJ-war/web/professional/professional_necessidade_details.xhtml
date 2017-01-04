@@ -9,7 +9,7 @@
     <h:body>
         <h:panelGrid columns="2">
 
-            <h:outputLabel for="number" value="Number: " />
+            <h:outputLabel for="Code" value="Code: " />
             <h:outputText 
                 id="username"
                 value="#{administratorManager.currentNecessidade.code}"/>
@@ -74,7 +74,7 @@
             <h:commandLink
                 id="return"
                 value="Return"
-                action="#{administratorManager.goToIndex()}" />
+                action="/faces/professional/professional_utentes_update?faces-redirect=true" />
         </h:form>
         <h:messages errorStyle="color: red" />        
         

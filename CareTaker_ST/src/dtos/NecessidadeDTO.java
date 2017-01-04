@@ -32,7 +32,7 @@ public class NecessidadeDTO implements Serializable{
 
 
     public NecessidadeDTO(
-            int number,
+            String code,
             String name,
             String description
             ) {

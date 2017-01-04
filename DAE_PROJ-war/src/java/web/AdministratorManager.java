@@ -23,6 +23,7 @@ import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MyConstraintViolationException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
@@ -464,7 +465,13 @@ public class AdministratorManager implements Serializable {
         }catch(Exception e){
             logger.warning("Problem uptading utente in method updateUtente()");
         }
-        return "/faces/professional_admin/professional_admin_utentes_update";
+        if(isUserInRole("Administrator")){
+            return "/faces/professional_admin/professional_admin_utentes_update.xhtml?faces-redirect=true";
+        }
+        if(isUserInRole("Professional")){
+            return "/faces/professional/professional_utentes_update.xhtml?faces-redirect=true";
+        }
+        return "/error?faces-redirect=true";
     }
     
     public void removeUtente(ActionEvent event){
@@ -551,7 +558,7 @@ public class AdministratorManager implements Serializable {
         try{
             necessidadeBean.createNecessidade(newNecessidade.getCode(), newNecessidade.getName(), newNecessidade.getDescription(), currentUtente.getCode());
             clearNewNecessidade();
-            return "/faces/professional_admin/professional_admin_utentes_update";
+            return "/faces/professional/professional_utentes_update";
         }catch (EntityExistsException | EntityDoesNotExistException e){
             FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
             
@@ -590,17 +597,17 @@ public class AdministratorManager implements Serializable {
                     currentNecessidade.getName(),
                     currentNecessidade.getDescription()
             );
-            return "index?faces-redirect=true";
+            return "/faces/professional/professional_utentes_update";
             
         }catch(Exception e){
             logger.warning("Problem uptading necessidade in method updateNecessidade()");
         }
-        return "professional_admin_necessidade_update";
+        return "/faces/professional/professional_necessidade_update";
     }
     
     public void removeNecessidade(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("number");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("code");
             String code = param.getValue().toString();
             necessidadeBean.removeNecessidade(code);
         }catch(Exception e){
@@ -611,7 +618,6 @@ public class AdministratorManager implements Serializable {
     public List<NecessidadeDTO> getCurrentUtenteNecessidades() {
         try {
             List<NecessidadeDTO> nec = necessidadeBean.getAssociatedNecessidades(currentUtente.getCode());
-            System.out.println("nec done");
             return nec;
         } catch (Exception e) {
             System.out.println("Execption Necessidades");
@@ -681,6 +687,27 @@ public class AdministratorManager implements Serializable {
     public List<MaterialDTO> getEnrolledMateriaisOfNecessidade() {
         try {
             return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getCode());
+        } catch (EntityDoesNotExistException e) {
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
+        } catch (Exception e) {
+             System.out.println(e.toString());
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
+        }
+        return null;
+    }
+    public List<MaterialDTO> getEnrolledMateriaisOfAllNecessidade() {
+        try {
+            List<NecessidadeDTO> necessidades = getCurrentUtenteNecessidades();
+            
+            List<MaterialDTO> materials = new ArrayList<>();
+            
+            for(NecessidadeDTO n : necessidades){
+                List<MaterialDTO> aux = materialBean.getAssociatedMateriaisOfNecessidade(n.getCode());
+                for(MaterialDTO m : aux)
+                    materials.add(m);
+            }
+            
+            return materials;
         } catch (EntityDoesNotExistException e) {
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {

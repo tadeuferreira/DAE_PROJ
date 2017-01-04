@@ -60,8 +60,8 @@ public class Necessidade implements Serializable {
         return code;
     }
 
-    public void setCode(String number) {
-        this.code = number;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

@@ -47,10 +47,9 @@ public class NecessidadeBean implements Serializable{
     
     public void createNecessidade(String codeNec, String name, String description, String code) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
-        System.out.println("createNecessidade");
         try{  
             if(em.find(Necessidade.class,codeNec)!= null){
-               throw new EntityAlreadyExistsException("A necessidade whith that number already exists");
+               throw new EntityAlreadyExistsException("A necessidade whith that code already exists");
             }
             Utente utente = em.find(Utente.class, code);
             if (utente == null) {
@@ -125,7 +124,6 @@ public class NecessidadeBean implements Serializable{
         for(Necessidade n : necessidades){
             dtos.add(necessidadeToDTO(n));
         }
-        System.out.println("nec to dto");
         return dtos;
     }
     /*
@@ -172,7 +170,6 @@ public class NecessidadeBean implements Serializable{
             if( utente == null){
                 throw new EntityDoesNotExistException("There is no utente with that code.");
             }   
-            System.out.println("utent found");
             List<Necessidade> necessidades = (List<Necessidade>) utente.getNecessidades();
             return necessidadesToDTOs(necessidades);
         } catch (EntityDoesNotExistException e) {

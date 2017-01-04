@@ -50,7 +50,7 @@ public class Material implements Serializable {
             joinColumns
             = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"),
             inverseJoinColumns
-            = @JoinColumn(name = "NECESSIDADE_NUMBER", referencedColumnName = "NUMBER"))
+            = @JoinColumn(name = "NECESSIDADE_CODE", referencedColumnName = "CODE"))
     List<Necessidade> necessidades;
     
     public Material(){
