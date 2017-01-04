@@ -70,7 +70,26 @@
                             <h:outputText value="Description" />
                         </f:facet>
                         <h:outputText value="#{necessidade.description}" />
-                    </h:column>                        
+                    </h:column> 
+                    
+                    <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_necessidade_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentNecessidade}" value="#{necessidade}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_necessidade_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentNecessidade}" value="#{necessidade}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeNecessidade}">
+                        <f:param name="number" id="number" value="#{necessidade.number}" />
+                    </h:commandLink>
+                </h:form>
+            </h:column>   
 
         </h:dataTable>
    
@@ -82,7 +101,7 @@
            <h:form>
         <h:panelGrid columns="3">
 
-            <h:outputLabel for="number" value="Number " />
+            <h:outputLabel for="number" value="Number: " />
             <h:inputText 
                     id="number"
                     size="20"

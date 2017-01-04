@@ -526,7 +526,7 @@ public class AdministratorManager implements Serializable {
         }catch(Exception e){
             logger.warning("Problem uptading necessidade in method updateNecessidade()");
         }
-        return "admin_necessidades_update";
+        return "professional_admin_necessidade_update";
     }
     
     public void removeNecessidade(ActionEvent event){
@@ -611,7 +611,7 @@ public class AdministratorManager implements Serializable {
     
     public List<MaterialDTO> getEnrolledMateriaisOfNecessidade() {
         try {
-            return materialBean.getAssociatedMateriaisOfNecessidade(getEnrolledNecessidades());
+            return materialBean.getAssociatedMateriaisOfNecessidade(currentNecessidade.getNumber());
         } catch (EntityDoesNotExistException e) {
              System.out.println("Execption enrolled 1 Necessidades");
             FacesExceptionHandler.handleException(e, e.getMessage(), logger);
@@ -624,7 +624,7 @@ public class AdministratorManager implements Serializable {
     
     public void enrollMaterialOfNecessidade(ActionEvent event) {
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("code");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
             int code = Integer.parseInt(param.getValue().toString());
             materialBean.associateMaterialToNecessidade(currentNecessidade.getNumber(), code);
         } catch (EntityDoesNotExistException e) {
@@ -636,7 +636,7 @@ public class AdministratorManager implements Serializable {
     
     public void unrollMaterialOfNecessidade(ActionEvent event) {
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("code");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("materialCode");
             int code = Integer.parseInt(param.getValue().toString());
             materialBean.unrollMaterialOfNecessidade(currentNecessidade.getNumber(), code);
         } catch (EntityDoesNotExistException e) {

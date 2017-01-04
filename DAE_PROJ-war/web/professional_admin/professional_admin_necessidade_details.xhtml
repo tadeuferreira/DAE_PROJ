@@ -9,58 +9,28 @@
     <h:body>
         <h:panelGrid columns="2">
 
-            <h:outputLabel for="username" value="Username: " />
+            <h:outputLabel for="number" value="Number: " />
             <h:outputText 
                 id="username"
-                value="#{administratorManager.currentCuidador.username}"/>
+                value="#{administratorManager.currentNecessidade.number}"/>
 
             <h:outputLabel for="name" value="Name: " />
             <h:outputText 
                 id="name"
-                value="#{administratorManager.currentCuidador.name}"/>
+                value="#{administratorManager.currentNecessidade.name}"/>
 
-            <h:outputLabel for="email" value="Email: " />
+            <h:outputLabel for="description" value="Description: " />
             <h:outputText 
                 id="email"
-                value="#{administratorManager.currentCuidador.email}"/>
+                value="#{administratorManager.currentNecessidade.description}"/>
 
         </h:panelGrid>
         
-        <br/>        
-
-         <h:dataTable
-                    var="utente"
-                    summary="List of all associated utentes"
-                    value="#{administratorManager.currentCuidadorUtentes}"
-                    rules="all"
-                    cellpadding="5">
-
-                    <f:facet name="header">
-                        <h:outputText value="Listas de Utentes" />
-                    </f:facet>
-
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Number" />
-                        </f:facet>
-                        <h:outputText value="#{utente.code}" />
-                        <!--Falta validar o formato-->
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Name" />
-                        </f:facet>
-                        <h:outputText value="#{utente.name}" />
-                    </h:column>                      
-
-        </h:dataTable>
-        
-        <br/>              
+        <br/>                 
                 <h:dataTable
                     var="material"
-                    summary="List of all associated materials of cuidador"
-                    value="#{administratorManager.currentCuidadorMateriais}"
+                    summary="List of all associated materials of necessidade"
+                    value="#{administratorManager.currentNecessidadeMateriais}"
                     rules="all"
                     cellpadding="5">
 
@@ -104,7 +74,7 @@
             <h:commandLink
                 id="return"
                 value="Return"
-                action="#{administratorManager.goToIndex}" />
+                action="#{administratorManager.goToIndex()}" />
         </h:form>
         <h:messages errorStyle="color: red" />        
         

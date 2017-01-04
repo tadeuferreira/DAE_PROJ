@@ -119,7 +119,6 @@ public class UtenteBean implements Serializable {
     public void enrollUtenteToCuidador(String username, String code)
             throws EntityDoesNotExistException, CuidadorAssociatedException, UtenteAssociatedException{
         try {
-
             Cuidador cuidador = em.find(Cuidador.class, username);
             if (cuidador == null) {
                 throw new EntityDoesNotExistException("There is no cuidador with that username.");
@@ -134,8 +133,11 @@ public class UtenteBean implements Serializable {
                 throw new UtenteAssociatedException("Utente is already associated to that cuidador.");
             }
 
-            if (utente.getCuidador().getUsername() == cuidador.getUsername()) {
-                throw new CuidadorAssociatedException("Cuidador is already associated to that utente.");
+            
+            if (utente.getCuidador() != null){
+                if(utente.getCuidador().getUsername().equals(cuidador.getUsername())) {
+                    throw new CuidadorAssociatedException("Cuidador is already associated to that utente.");
+                }
             }
 
             utente.setCuidador(cuidador);
