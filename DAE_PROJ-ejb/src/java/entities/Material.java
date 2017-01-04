@@ -28,13 +28,14 @@ import javax.validation.constraints.NotNull;
     query = "SELECT e FROM Material e ORDER BY e.name")
 })
 public class Material implements Serializable {
-
+    
     @Id
     private String code;
     @NotNull
     private String name;  
     @NotNull
     private String type;
+    @NotNull
     private String descripion;
     
     @ManyToMany

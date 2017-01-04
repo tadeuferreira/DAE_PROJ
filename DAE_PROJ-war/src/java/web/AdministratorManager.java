@@ -743,7 +743,7 @@ public class AdministratorManager implements Serializable {
     }
     
     ///PROCEDIMENTO///
-    
+    /*
     public String createProcedimento() throws EntityAlreadyExistsException, EntityDoesNotExistException{
         try{
             procedimentoBean.createProcedimento(newProcedimento.getProcCode(), newProcedimento.getNameProc(), newProcedimento.getDescriptionProc(),
@@ -804,7 +804,7 @@ public class AdministratorManager implements Serializable {
             return null;
         }
     }
-    
+    */
     public String goToIndex(){
          if(isUserInRole("Administrator")){
                 return "/faces/admin/admin_index.xhtml?faces-redirect=true";

@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,12 +38,17 @@ public class Necessidade implements Serializable {
     @NotNull
     String description;
     
+    @NotNull
     @ManyToMany(mappedBy="necessidades")
     List<Material> materiais;
     
+    @NotNull
     @ManyToOne
     @JoinColumn(name="UTENTE_CODE")           
     Utente utente;
+    
+    @OneToOne
+    Procedimento procedimento;
     
     public Necessidade(){
         this.materiais = new ArrayList();
@@ -103,6 +109,15 @@ public class Necessidade implements Serializable {
     public void removeMaterial(Material material){
         this.materiais.remove(material);
     }
+
+    public Procedimento getProcedimento() {
+        return procedimento;
+    }
+
+    public void setProcedimento(Procedimento procedimento) {
+        this.procedimento = procedimento;
+    }
+    
 
     
 }

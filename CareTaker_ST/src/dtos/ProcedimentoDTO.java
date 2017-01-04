@@ -6,73 +6,77 @@
 package dtos;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
+@XmlRootElement(name = "Procedure")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProcedimentoDTO implements Serializable{
     
-    protected int procCode;
-    protected String nameProc;
-    protected String descriptionProc;
-    protected String necessidade;
-    protected String utente;
+  
+    private String code;
+    private String name;
+    private String description;
+    private String necessidadeCode;
+    private String utenteCode;
     
     public ProcedimentoDTO(){
         
     }
     
-    public ProcedimentoDTO(int procCode, String nameProc, String descriptionProc, String utente, String necessidade ){
-        this.procCode = procCode;
-        this.nameProc = nameProc;
-        this.descriptionProc = descriptionProc;
-       
-        this.utente = utente;
-        this.necessidade = necessidade;
+    public ProcedimentoDTO(String code, String name, String description, String necessidadeCode, String utenteCode){
+      this.code = code;
+      this.name = name;
+      this.description = description;
+      this.necessidadeCode = necessidadeCode;
+      this.utenteCode = utenteCode;
     }
 
-    public int getProcCode() {
-        return procCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setProcCode(int procCode) {
-        this.procCode = procCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getNameProc() {
-        return nameProc;
+    public String getName() {
+        return name;
     }
 
-    public void setNameProc(String nameProc) {
-        this.nameProc = nameProc;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescriptionProc() {
-        return descriptionProc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionProc(String descriptionProc) {
-        this.descriptionProc = descriptionProc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getNecessidade() {
-        return necessidade;
+    public String getNecessidadeCode() {
+        return necessidadeCode;
     }
 
-    public void setNecessidade(String necessidade) {
-        this.necessidade = necessidade;
+    public void setNecessidadeCode(String necessidadeCode) {
+        this.necessidadeCode = necessidadeCode;
     }
 
+    public String getUtenteCode() {
+        return utenteCode;
+    }
+
+    public void setUtenteCode(String utenteCode) {
+        this.utenteCode = utenteCode;
+    }
+
+    
    
-
-    public String getUtente() {
-        return utente;
-    }
-
-    public void setUtente(String utente) {
-        this.utente = utente;
-    }
-    
-    
 }

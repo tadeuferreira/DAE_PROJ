@@ -11,8 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -22,153 +25,77 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
     @NamedQuery(name= "findAllProcedimentos", 
-    query = "SELECT e FROM Procedimento e ORDER BY e.nameProc")
+    query = "SELECT e FROM Procedimento e ORDER BY e.name")
 })
 public class Procedimento implements Serializable {
 
     @Id
-    private int procCode;
+    private String code;
     @NotNull
-    private String nameProc;
+    private String name;
     @NotNull
-    private String descriptionProc;
+    private String description;
     @NotNull
-    private String necessidade;
-    @NotNull
-    private String utente;
+    @OneToOne
+    private Necessidade necessidade;
     
-    LinkedList<Utente> utentes;
-    LinkedList<Cuidador> cuidadores;
-    LinkedList<Material> materiais;
-    LinkedList<Necessidade> necessidades;
+    @ManyToOne
+    @JoinColumn(name="UTENTE_CODE")   
+    Utente utente;
+
     
     public Procedimento(){
-        this.utentes = new LinkedList();
-        this.cuidadores = new LinkedList();
-        this.materiais = new LinkedList();
-        this.necessidades = new LinkedList();
 
     }
     
-    public Procedimento(int procCode, String nameProc, String descriptionProc, String utente, String necessidade){
-        this.procCode = procCode;
-        this.nameProc = nameProc;
-        this.descriptionProc = descriptionProc;
-        
-        
-        this.utente = utente;
+    public Procedimento(String code, String name, String description, Necessidade necessidade, Utente utente){
+        this.code = code;
+        this.name = name;
+        this.description= description;
         this.necessidade = necessidade;
-        
-        this.utentes = new LinkedList();
-        this.cuidadores = new LinkedList();
-        this.materiais = new LinkedList();
-        this.necessidades = new LinkedList();
-    }
-
-    public int getProcCode() {
-        return procCode;
-    }
-
-    public void setProcCode(int procCode) {
-        this.procCode = procCode;
-    }
-
-    public String getNameProc() {
-        return nameProc;
-    }
-
-    public void setNameProc(String nameProc) {
-        this.nameProc = nameProc;
-    }
-
-    public String getDescriptionProc() {
-        return descriptionProc;
-    }
-
-    public void setDescriptionProc(String descriptionProc) {
-        this.descriptionProc = descriptionProc;
-    }
-
-    public String getUtente() {
-        return utente;
-    }
-
-    public void setUtente(String utente) {
         this.utente = utente;
     }
 
-    public LinkedList<Utente> getUtentes() {
-        return utentes;
+    public String getCode() {
+        return code;
     }
 
-    public void setUtentes(LinkedList<Utente> utentes) {
-        this.utentes = utentes;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public LinkedList<Cuidador> getCuidadores() {
-        return cuidadores;
+    public String getName() {
+        return name;
     }
 
-    public void setCuidadores(LinkedList<Cuidador> cuidadores) {
-        this.cuidadores = cuidadores;
-    }
-    
-    public void addCuidador(Cuidador cuidador){
-        this.cuidadores.addLast(cuidador);
-    }
-    
-    public void removeCuidador(Cuidador cuidador){
-        this.cuidadores.remove(cuidador);
-    } 
-    
-     public void addUtente(Utente utente){
-        this.utentes.addLast(utente);
-    }
-    
-    public void removeUtente(Utente utente){
-        this.utentes.remove(utente);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public LinkedList<Material> getMateriais() {
-        return materiais;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMateriais(LinkedList<Material> materiais) {
-        this.materiais = materiais;
-    }
-    
-    public void addMaterial(Material material){
-        this.materiais.addLast(material);
-    }
-    
-    public void removeMaterial(Material material){
-        this.materiais.remove(material);
-    } 
-
-    public LinkedList<Necessidade> getNecessidades() {
-        return necessidades;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setNecessidades(LinkedList<Necessidade> necessidades) {
-        this.necessidades = necessidades;
-    }
-    
-    
-    public void addNecessidade(Necessidade necessidade){
-        this.necessidades.addLast(necessidade);
-    }
-    
-    public void removeNecessidade(Necessidade necessidade){
-        this.necessidades.remove(necessidade);
-    } 
-
-    public String getNecessidade() {
+    public Necessidade getNecessidade() {
         return necessidade;
     }
 
-    public void setNecessidade(String necessidade) {
+    public void setNecessidade(Necessidade necessidade) {
         this.necessidade = necessidade;
     }
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+    
     
     
     

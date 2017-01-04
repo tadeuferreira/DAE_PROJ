@@ -31,6 +31,7 @@ import javax.validation.constraints.NotNull;
 public class Utente implements Serializable {
 
     @Id
+    @NotNull
     private String code;
     
     @NotNull
@@ -43,6 +44,8 @@ public class Utente implements Serializable {
     @JoinColumn(name="CUIDADOR_USERNAME")   
     Cuidador cuidador;
     
+    
+    @OneToMany(cascade= CascadeType.REMOVE , mappedBy="utente")
     List<Procedimento> procedimentos;
     
     

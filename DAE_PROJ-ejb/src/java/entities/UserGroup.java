@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -29,10 +30,13 @@ public class UserGroup implements Serializable {
         Administrator, Professional, Cuidador;
     }
     
+    @NotNull
     @Id
     @Enumerated(EnumType.STRING)
     @Column(name="GROUP_NAME")
     private GROUP groupName;
+    
+    @NotNull
     @Id
     @OneToOne
     @JoinColumn(name = "USERNAME")

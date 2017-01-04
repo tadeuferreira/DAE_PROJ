@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -32,6 +33,7 @@ import javax.persistence.OneToOne;
 })
 public class Cuidador extends User implements Serializable {
 
+    @NotNull
     @ManyToMany(mappedBy = "cuidadores")
              @JoinTable(name = "CUIDADORES_MATERIALS",
             joinColumns
@@ -40,6 +42,7 @@ public class Cuidador extends User implements Serializable {
             = @JoinColumn(name = "MATERIAL_CODE", referencedColumnName = "CODE"))
     List<Material> materials;
     
+    @NotNull
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "cuidador")
     List<Utente> utentes;
     

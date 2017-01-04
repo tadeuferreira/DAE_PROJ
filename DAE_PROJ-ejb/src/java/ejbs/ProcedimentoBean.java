@@ -6,7 +6,11 @@
 package ejbs;
 
 import dtos.MaterialDTO;
+import dtos.NecessidadeDTO;
 import dtos.ProcedimentoDTO;
+import dtos.UtenteDTO;
+import entities.Material;
+import entities.Necessidade;
 import entities.Procedimento;
 import entities.Utente;
 import exceptions.EntityAlreadyExistsException;
@@ -17,36 +21,55 @@ import exceptions.UtenteAssociatedException;
 import exceptions.Utils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
 @Stateless
+@Path("/procedures")
 public class ProcedimentoBean {
 
     @PersistenceContext
     private EntityManager em;
     
-    
-    public void createProcedimento(int procCode, String nameProc, String descriptionProc, String utente, String necessidade) 
+    @POST
+    @RolesAllowed({"Cuidador"})
+    @Path("create")
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public void createProcedimento(ProcedimentoDTO procedimentoDTO) 
         throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
         
         try{  
-            if(em.find(Procedimento.class,procCode)!= null){
+            if(em.find(Procedimento.class, procedimentoDTO.getCode())!= null){
                throw new EntityAlreadyExistsException("A procedimento whith that code already exists");
             }
-         
-            Procedimento procedimento = new Procedimento(procCode, nameProc, descriptionProc, utente, necessidade);
+            Necessidade necessidade = em.find(Necessidade.class, procedimentoDTO.getNecessidadeCode());
+            if(necessidade == null){
+                throw new EntityDoesNotExistException("cant find necessidade");
+            }
+            
+            if(necessidade.getUtente() == null){
+                throw new EntityDoesNotExistException("cant find utente");
+            }
+            Procedimento procedimento = new Procedimento(procedimentoDTO.getCode(),
+                    procedimentoDTO.getName(), procedimentoDTO.getDescription(),necessidade,necessidade.getUtente());
             em.persist(procedimento);
-            enrollProcedimentoToUtente(procCode,utente);
        // EntityDoesNotExistException missing
         }catch (EntityAlreadyExistsException e){
             throw e;
@@ -58,37 +81,104 @@ public class ProcedimentoBean {
         }
     }
     
-    public void enrollProcedimentoToUtente(int procCode, String code)
-            throws EntityDoesNotExistException, UtenteAssociatedException, ProcedimentoAssociatedException{
+    @PUT
+    @RolesAllowed({"Cuidador"})
+    @Path("create")
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public void updateProcedimento(ProcedimentoDTO procedimentoDTO) 
+        throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
+        
+        try{  
+            Procedimento proc = em.find(Procedimento.class, procedimentoDTO.getCode());
+            if(proc == null){
+               throw new EntityDoesNotExistException("cant find proc");
+            }
+            Necessidade necessidade = em.find(Necessidade.class, procedimentoDTO.getNecessidadeCode());
+            if(necessidade == null){
+                throw new EntityDoesNotExistException("cant find necessidade");
+            }
+            Utente utente = em.find(Utente.class, procedimentoDTO.getUtenteCode());
+            if(utente == null){
+                throw new EntityDoesNotExistException("cant find utente");
+            }
+            proc.setName(procedimentoDTO.getName());
+            proc.setDescription(procedimentoDTO.getDescription());
+            proc.setNecessidade(necessidade);
+            proc.setUtente(utente);
+            em.merge(proc);
+            em.merge(utente);
+            em.merge(necessidade);
+        }catch(ConstraintViolationException e){
+            throw new MyConstraintViolationException(Utils.getConstraintViolationMessages(e));
+        }catch (Exception e){
+           
+           throw new EJBException (e.getMessage());
+        }
+    }
+    @POST
+    @RolesAllowed({"Cuidador"})
+    @Path("remove")
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+     public void removeProcedimento(ProcedimentoDTO procedimentoDTO) 
+        throws EntityAlreadyExistsException, EntityDoesNotExistException, MyConstraintViolationException{
+        try{
+            Procedimento proc = em.find(Procedimento.class, procedimentoDTO.getCode());
+            if(proc == null){
+               throw new EntityDoesNotExistException("cant find proc");
+            }
+             Necessidade necessidade = em.find(Necessidade.class, procedimentoDTO.getNecessidadeCode());
+            if(necessidade == null){
+                throw new EntityDoesNotExistException("cant find necessidade");
+            }
+            Utente utente = em.find(Utente.class, procedimentoDTO.getUtenteCode());
+            if(utente == null){
+                throw new EntityDoesNotExistException("cant find utente");
+            }
+            necessidade.setProcedimento(null);
+            utente.removeProcedimento(proc);
+            em.remove(proc);
+            em.merge(necessidade);
+            em.merge(utente);                        
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+     
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("necessity/{code}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public ProcedimentoDTO getProcedimentoNecessidade(@PathParam("code") String code) throws EntityDoesNotExistException {
         try {
-
-            Utente utente = em.find(Utente.class, code);
-            if (utente == null) {
-                throw new EntityDoesNotExistException("There is no utente with that code.");
-            }
-
-            Procedimento procedimento = em.find(Procedimento.class, procCode);
-            if (procedimento == null) {
-                throw new EntityDoesNotExistException("There is no procedimento with that code.");
-            }
-
-            if (utente.getProcedimentos().contains(procedimento)) {
-                throw new ProcedimentoAssociatedException("Procedimento is already associated to that utente.");
-            }
-
-            if (procedimento.getUtentes().contains(utente)) {
-                throw new UtenteAssociatedException("Utente is already associated to that procediemnto.");
-            }
-
-            procedimento.addUtente(utente);
-            utente.addProcedimento(procedimento);
-
-        } catch (EntityDoesNotExistException | UtenteAssociatedException | ProcedimentoAssociatedException e) {
+         Necessidade necessidade = em.find(Necessidade.class, code);
+         if(necessidade == null)
+             throw new EntityDoesNotExistException("cant find necessidade");
+        return procedimentoToDTO(necessidade.getProcedimento());
+        } catch (EntityDoesNotExistException e) {
             throw e;
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-    } 
+    }
+    
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("patient/{code}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<ProcedimentoDTO> getProcedimentosUtente(@PathParam("code") String code) throws EntityDoesNotExistException {
+        List<MaterialDTO> mats = null;
+        try {
+         Utente utente = em.find(Utente.class, code);
+         if(utente == null)
+             throw new EntityDoesNotExistException("cant find Utente");
+        return procedimentosToDTOs(utente.getProcedimentos());
+        } catch (EntityDoesNotExistException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
     
     public List<ProcedimentoDTO> getAllProcedimentos(){
         try{
@@ -99,9 +189,9 @@ public class ProcedimentoBean {
         }
     }  
     
-    public Procedimento getProcedimento(int procCode){
+    public Procedimento getProcedimento(String code){
         try{
-            Procedimento procedimento = em.find(Procedimento.class, procCode);
+            Procedimento procedimento = em.find(Procedimento.class, code);
             return procedimento;
         }catch(Exception e){
             throw new EJBException(e.getMessage());
@@ -110,11 +200,11 @@ public class ProcedimentoBean {
     
     ProcedimentoDTO procedimentoToDTO(Procedimento procedimento){
         return new ProcedimentoDTO(
-                        procedimento.getProcCode(),
-                        procedimento.getNameProc(),
-                        procedimento.getDescriptionProc(),
-                        procedimento.getUtente(),
-                        procedimento.getNecessidade());
+                        procedimento.getCode(),
+                        procedimento.getName(),
+                        procedimento.getDescription(),                    
+                        procedimento.getNecessidade().getCode(),
+                        procedimento.getUtente().getCode());
         
     }
     
