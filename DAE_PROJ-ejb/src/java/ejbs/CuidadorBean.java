@@ -69,7 +69,7 @@ public class CuidadorBean {
         try {
             Cuidador cuidador = em.find(Cuidador.class, username);
             if (cuidador == null) {
-                throw new EntityDoesNotExistException("There is no student with that username.");
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
             }
             
             em.remove(cuidador);
@@ -86,7 +86,7 @@ public class CuidadorBean {
         try {
             Cuidador cuidador = em.find(Cuidador.class, username);
             if (cuidador == null) {
-                throw new EntityDoesNotExistException("There is no student with that username.");
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
             }
 
             cuidador.setPassword(password);

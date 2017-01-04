@@ -220,7 +220,7 @@ public class AdministratorManager implements Serializable {
             return goToIndex();
             
         }catch(Exception e){
-            logger.warning("Problem uptading student in method updateAdministrator()");
+            logger.warning("Problem uptading administrator in method updateAdministrator()");
         }
         return "/faces/admin/admin_admins_update";
     }
@@ -231,7 +231,7 @@ public class AdministratorManager implements Serializable {
             String username = param.getValue().toString();
             administratorBean.removeAdministrator(username);
         }catch(Exception e){
-            logger.warning("Problem removing student in method removeStudent()");
+            logger.warning("Problem removing administrator in method removeAdministrator()");
         }
     }
     
@@ -288,7 +288,7 @@ public class AdministratorManager implements Serializable {
            return goToIndex();
             
         }catch(Exception e){
-            logger.warning("Problem uptading student in method updateProsissionalSaude()");
+            logger.warning("Problem uptading Profissional in method updateProsissionalSaude()");
         }
         return "/faces/admin/admin_professionals_update";
     }
@@ -299,7 +299,7 @@ public class AdministratorManager implements Serializable {
             String id = param.getValue().toString();
             profissionalSaudeBean.removeProfissionalSaude(id);
         }catch(Exception e){
-            logger.warning("Problem removing student in method removeProfissionalSaude()");
+            logger.warning("Problem removing Profissional in method removeProfissionalSaude()");
         }
     }
     
