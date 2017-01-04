@@ -13,119 +13,23 @@
              <h:form>
             <h:commandLink value="Logout" action="#{userManager.logout}"/>
         </h:form>
-        <h:dataTable
-            var="material"
-            summary="List of all materials"
-            value="#{administratorManager.allMateriais}"
-            rules="all"
-            cellpadding="5">
-            
-            <f:facet name="header">
-                <h:outputText value="Materials" />
-            </f:facet>            
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Code" />
-                </f:facet>
-                <h:outputText value="#{material.code}" />
-                <!--Falta validar o formato-->
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Name" />
-                </f:facet>
-                <h:outputText value="#{material.name}" />
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Type" />
-                </f:facet>
-                <h:outputText value="#{material.type}" />
-            </h:column>                        
-            
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Actions" />
-                </f:facet>
-                <h:form>
-                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_materials_details?faces-redirect=true">
-                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
-                    </h:commandLink>
-                    &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_materials_update?faces-redirect=true">
-                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
-                    </h:commandLink>
-                    &nbsp;
-                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeMaterial}">
-                        <f:param name="materialCode" id="materialCode" value="#{material.code}" />
-                    </h:commandLink>
-                </h:form>
-                
-            </h:column> 
-  
-        </h:dataTable>
-        <br/>
-        <h:form>
-            <h:commandLink value="New Material" action="/faces/professional_admin/professional_admin_materials_create?faces-redirect=true"/>
+          
+          <br></br>
+          
+          <h:outputText value="Find Cuidador by Username:" />
+            <h:form>
+                <h:inputText 
+                    id="username"
+                    value="#{administratorManager.searchCuidadorUsername}"
+                    size="20"
+                    >
+                </h:inputText>
+           
+                <h:commandButton value="Search" action="#{administratorManager.searchCuidador}" />
             </h:form>
+
+          <br></br>
         
-        <br/>
-        <br/>
-        
-         <h:dataTable
-            var="utente"
-            summary="List of all utentes"
-            value="#{administratorManager.allUtentes}"
-            rules="all"
-            cellpadding="5">
-            
-            <f:facet name="header">
-                <h:outputText value="Utentes" />
-            </f:facet>            
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Code" />
-                </f:facet>
-                <h:outputText value="#{utente.code}" />
-                <!--Falta validar o formato-->
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Name" />
-                </f:facet>
-                <h:outputText value="#{utente.name}" />
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Actions" />
-                </f:facet>
-                <h:form>
-                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_utentes_details?faces-redirect=true">
-                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
-                    </h:commandLink>
-                    &nbsp;
-                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_utentes_update?faces-redirect=true">
-                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
-                    </h:commandLink>
-                    &nbsp;
-                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeUtente}">
-                        <f:param name="utenteCode" id="utenteCode" value="#{utente.code}" />
-                    </h:commandLink>
-                </h:form>
-                
-            </h:column> 
-  
-        </h:dataTable>
-        <br/>
-        <h:form>
-            <h:commandLink value="New Utente" action="/faces/professional_admin/professional_admin_utentes_create?faces-redirect=true"/>
-            </h:form>
          <h:dataTable
             var="cuidador"
             summary="List of all cuidadores"
@@ -186,6 +90,161 @@
         <h:form>
             <h:commandLink value="New Cuidador" action="/faces/professional_admin/professional_admin_cuidadores_create?faces-redirect=true"/>
         </h:form>
+          
+          <br></br>
+          
+          <h:outputText value="Find Material by Code:" />
+            <h:form>
+                <h:inputText 
+                    id="username"
+                    value="#{administratorManager.searchMaterialCode}"
+                    size="20"
+                    >
+                </h:inputText>
+           
+                <h:commandButton value="Search" action="#{administratorManager.searchMaterial}" />
+            </h:form>
+
+          <br></br>
+          
+        <h:dataTable
+            var="material"
+            summary="List of all materials"
+            value="#{administratorManager.allMateriais}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Materials" />
+            </f:facet>            
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Code" />
+                </f:facet>
+                <h:outputText value="#{material.code}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{material.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Type" />
+                </f:facet>
+                <h:outputText value="#{material.type}" />
+            </h:column>                        
+                    
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Description" />
+                </f:facet>
+                <h:outputText value="#{material.description}" />
+            </h:column> 
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_materials_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_materials_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentMaterial}" value="#{material}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeMaterial}">
+                        <f:param name="materialCode" id="materialCode" value="#{material.code}" />
+                    </h:commandLink>
+                </h:form>
+                
+            </h:column> 
+  
+        </h:dataTable>
+        <br/>
+        <h:form>
+            <h:commandLink value="New Material" action="/faces/professional_admin/professional_admin_materials_create?faces-redirect=true"/>
+            </h:form>
+        
+        <br/>
+        <br/>
+        
+        <br></br>
+          
+          <h:outputText value="Find Utente by Code" />
+            <h:form>
+                <h:inputText 
+                    id="username"
+                    value="#{administratorManager.searchUtenteCode}"
+                    size="20"
+                    >
+                </h:inputText>
+           
+                <h:commandButton value="Search" action="#{administratorManager.searchUtente}" />
+            </h:form>
+
+          <br></br>
+        
+         <h:dataTable
+            var="utente"
+            summary="List of all utentes"
+            value="#{administratorManager.allUtentes}"
+            rules="all"
+            cellpadding="5">
+            
+            <f:facet name="header">
+                <h:outputText value="Utentes" />
+            </f:facet>            
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Code" />
+                </f:facet>
+                <h:outputText value="#{utente.code}" />
+                <!--Falta validar o formato-->
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{utente.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink value="Details" action="/faces/professional_admin/professional_admin_utentes_details?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Update" action="/faces/professional_admin/professional_admin_utentes_update?faces-redirect=true">
+                        <f:setPropertyActionListener target="#{administratorManager.currentUtente}" value="#{utente}" />
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="Remove" actionListener="#{administratorManager.removeUtente}">
+                        <f:param name="utenteCode" id="utenteCode" value="#{utente.code}" />
+                    </h:commandLink>
+                </h:form>
+                
+            </h:column> 
+  
+        </h:dataTable>
+        <br/>
+        <h:form>
+            <h:commandLink value="New Utente" action="/faces/professional_admin/professional_admin_utentes_create?faces-redirect=true"/>
+            </h:form>
+        
+        
     </h:body>
 </html>
 

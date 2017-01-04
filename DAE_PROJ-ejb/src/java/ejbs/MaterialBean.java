@@ -140,10 +140,10 @@ public class MaterialBean implements Serializable{
         }
     } 
     
-    public Material getMaterial(String code){
+    public MaterialDTO getMaterial(String code){
         try{
             Material material = em.find(Material.class, code);
-            return material;
+            return materialToDTO(material);
         }catch(Exception e){
             throw new EJBException(e.getMessage());
         }
