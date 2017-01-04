@@ -11,6 +11,7 @@ import exceptions.EntityAlreadyExistsException;
 import exceptions.EntityDoesNotExistException;
 import exceptions.MaterialAssociatedException;
 import exceptions.MyConstraintViolationException;
+import exceptions.UtenteAssociatedException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -77,7 +78,8 @@ public class ConfigBean {
            utenteBean.createUtente("456372", "Joao");
            utenteBean.createUtente("342534", "Maria");
            utenteBean.createUtente("453983", "Isabel");
-
+           
+           cuidadorBean.create("c1", "c1", "c1", "c1@c1.com");
            cuidadorBean.create("56745612", "Ricardo", "Ricardo", "dae.ei.ipleiria@gmail.com");
            cuidadorBean.create("45645634", "Diogo", "Diogo", "dae.ei.ipleiria@gmail.com");
            cuidadorBean.create("78678856", "Tiago", "Tiago", "dae.ei.ipleiria@gmail.com");
@@ -86,14 +88,18 @@ public class ConfigBean {
            cuidadorBean.create("45432413", "Joao", "Joao", "dae.ei.ipleiria@gmail.com");
            cuidadorBean.create("97890746", "Marco", "Marco", "dae.ei.ipleiria@gmail.com");
            
-           materialBean.associateMaterialtoCuidador("56745612", 123456);
-           materialBean.associateMaterialtoCuidador("56745612", 456689);
-           materialBean.associateMaterialtoCuidador("24355478", 456689);
+           utenteBean.enrollUtenteToCuidador("c1", "678867");
+           utenteBean.enrollUtenteToCuidador("c1", "978695");
+           utenteBean.enrollUtenteToCuidador("c1", "456372");
+           
+           materialBean.associateMaterialtoCuidador("c1", 123456);
+           materialBean.associateMaterialtoCuidador("c1", 456689);
+           materialBean.associateMaterialtoCuidador("c1", 456689);
            materialBean.associateMaterialtoCuidador("24355478", 123456);
            materialBean.associateMaterialtoCuidador("56745612", 123890);
            materialBean.associateMaterialtoCuidador("24355478", 234789);
 
-       }catch (EntityAlreadyExistsException | EntityDoesNotExistException | MyConstraintViolationException | CuidadorAssociatedException | MaterialAssociatedException e){
+       }catch (EntityAlreadyExistsException | UtenteAssociatedException | EntityDoesNotExistException | MyConstraintViolationException | CuidadorAssociatedException | MaterialAssociatedException e){
           System.err.println("Error:" + e.getMessage());
        }
 

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Academic Management</title>
+    </h:head>
+    <h:body>
+        <h:form>                  
+            <h:panelGrid columns="3">
+
+                <h:outputLabel for="code" value="Code: " />
+                <h:outputText 
+                    id="code"
+                    value="#{administratorManager.currentUtente.code}"/>
+                <br></br>
+                
+                <h:outputLabel for="name" value="Name: " />
+                <h:inputText
+                    id="name"
+                    size="20"
+                    required="true"
+                    requiredMessage="Error: Name cannot be empty."
+                    value="#{administratorManager.currentUtente.name}"/>
+                <h:message for="name" errorStyle="color: red" />                        
+
+                <br></br>
+        <br></br>
+        <br></br>
+                <h:commandButton
+                    id="submit"
+                    value="Update"
+                    action="#{administratorManager.updateUtente()}" />
+                <h:message for="submit" style="color: red"/>
+            </h:panelGrid>  
+
+        </h:form>
+        
+              <br/>
+                
+                <h:dataTable
+                    var="necessidade"
+                    summary="List of all associated necessidades"
+                    value="#{administratorManager.currentUtenteNecessidades}"
+                    rules="all"
+                    cellpadding="5">
+
+                    <f:facet name="header">
+                        <h:outputText value="Necessidades do Utente" />
+                    </f:facet>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Number" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.number}" />
+                        <!--Falta validar o formato-->
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.name}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description" />
+                        </f:facet>
+                        <h:outputText value="#{necessidade.description}" />
+                    </h:column>                        
+
+        </h:dataTable>
+   
+                <br/>
+                <br/>
+                <h:outputLabel value="New Necessidade"></h:outputLabel>
+                <br/>
+                <br/>
+           <h:form>
+        <h:panelGrid columns="3">
+
+            <h:outputLabel for="number" value="Number " />
+            <h:inputText 
+                    id="number"
+                    size="20"
+                    required="true"
+                    requiredMessage="Error: Number cannot be empty."
+                    value="#{administratorManager.newNecessidade.number}">
+        
+            </h:inputText>
+            <h:message for="code" errorStyle="color: red" />
+
+            <h:outputLabel for="name" value="Name: " />
+                <h:inputText 
+                    id="name"
+                    size="52"
+                    required="true"
+                    requiredMessage="Error: Name cannot be empty."                            
+                    value="#{administratorManager.newNecessidade.name}" />
+                <h:message for="name" errorStyle="color: red" />
+            
+            
+            <h:outputLabel for="description" value="Description: " />
+                <h:inputText 
+                    id="description"
+                    size="52"
+                    required="true"
+                    requiredMessage="Error: Description cannot be empty."                            
+                    value="#{administratorManager.newNecessidade.description}" />
+                <h:message for="type" errorStyle="color: red" />
+            
+        <br></br>
+                <h:commandButton
+                    id="submit"
+                    value="Create"
+                    binding="#{administratorManager.component}" 
+                    action="#{administratorManager.createNecessidade}" />
+                <h:message for="submit" style="color: red"/>
+             
+         </h:panelGrid>  
+            </h:form>
+         <h:form>                  
+            <h:commandLink
+                id="return"
+                value="Return"
+                action="#{administratorManager.goToIndex()}" />
+        </h:form>
+        <h:messages errorStyle="color: red" />        
+
+    </h:body>
+</html>
+

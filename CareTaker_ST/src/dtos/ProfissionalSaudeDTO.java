@@ -6,23 +6,18 @@
 package dtos;
 
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
-@XmlRootElement(name = "Caretaker")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class CuidadorDTO extends UserDTO implements Serializable {
-     
-    public CuidadorDTO(){
+public class ProfissionalSaudeDTO extends UserDTO implements Serializable {
+    
+    public ProfissionalSaudeDTO(){
     
     }
 
-    public CuidadorDTO(
+    public ProfissionalSaudeDTO(
             String username,
             String password,
             String name,
@@ -38,4 +33,3 @@ public class CuidadorDTO extends UserDTO implements Serializable {
         
     }
 }
-

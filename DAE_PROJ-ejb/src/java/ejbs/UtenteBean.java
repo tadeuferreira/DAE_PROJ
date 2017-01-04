@@ -5,6 +5,7 @@
  */
 package ejbs;
 
+import exceptions.*;
 import dtos.UtenteDTO;
 import entities.Cuidador;
 import entities.Utente;
@@ -18,21 +19,25 @@ import exceptions.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
 @Stateless
+@Path("/patients")
 public class UtenteBean implements Serializable {
 
     @PersistenceContext
@@ -130,13 +135,19 @@ public class UtenteBean implements Serializable {
                 throw new EntityDoesNotExistException("There is no utente with that code.");
             }
 
-            if (cuidador.getUtentes().contains(utente)) {
+            if(cuidador.getUtentes() != null){
+               if (cuidador.getUtentes().contains(utente)) {
                 throw new UtenteAssociatedException("Utente is already associated to that cuidador.");
+            } 
             }
+            
 
+           if(utente.getCuidador() != null)  {
             if (utente.getCuidador().getUsername() == cuidador.getUsername()) {
                 throw new CuidadorAssociatedException("Cuidador is already associated to that utente.");
-            }
+            }   
+           }
+            
 
             utente.setCuidador(cuidador);
             cuidador.addUtente(utente);
@@ -204,6 +215,28 @@ public class UtenteBean implements Serializable {
             return utentesToDTOs(utentes);
         } catch (EntityDoesNotExistException e) {
             throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("caretaker/{username}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public List<UtenteDTO> getAllMyPatients(@PathParam("username") String username) throws EntityDoesNotExistException {
+        List<UtenteDTO> utentes = null;
+        System.out.println(username);
+        try {
+         Cuidador cuidador = em.find(Cuidador.class, username);
+         if(cuidador == null)
+             throw new EntityDoesNotExistException("cant find cuidador");
+         List<Utente> uts = cuidador.getUtentes();
+            System.out.println(uts == null);
+            System.out.println(uts.isEmpty());
+         utentes = utentesToDTOs(uts);
+        return utentes;
+        } catch (EntityDoesNotExistException e) {
+            throw e;
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }

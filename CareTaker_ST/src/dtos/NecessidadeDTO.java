@@ -6,16 +6,11 @@
 package dtos;
 
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
-@XmlRootElement(name = "Necessity")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class NecessidadeDTO implements Serializable{
     
     protected int number;
@@ -26,6 +21,15 @@ public class NecessidadeDTO implements Serializable{
     public NecessidadeDTO(){
     
     }
+     @Override
+    public String toString(){
+       StringBuilder sb = new StringBuilder();
+       sb.append("Number: "+number);
+       sb.append(" Name: "+name);
+       sb.append(" Description: "+description);
+       return sb.toString();
+    }
+
 
     public NecessidadeDTO(
             int number,

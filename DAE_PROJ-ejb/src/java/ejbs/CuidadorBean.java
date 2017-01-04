@@ -17,17 +17,25 @@ import exceptions.MyConstraintViolationException;
 import exceptions.Utils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author Daniel
  */
+
 @Stateless
+@Path("/caretakers")
 public class CuidadorBean {
 
     @PersistenceContext
@@ -112,6 +120,20 @@ public class CuidadorBean {
             throw new EJBException(e.getMessage());
         }
     } 
+    @GET
+    @RolesAllowed({"Cuidador"})
+    @Path("caretaker/{username}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public CuidadorDTO getCuidadorUSER(@PathParam("username") String username) throws EntityDoesNotExistException {
+        try{
+            Cuidador cuidador = em.find(Cuidador.class, username);
+            if(cuidador == null)
+                throw new EntityDoesNotExistException("cant find cuidador");
+            return cuidadorToDTO(cuidador);
+        }catch(Exception e){
+            throw new EJBException(e.getMessage());
+        }
+    } 
     
     CuidadorDTO cuidadorToDTO(Cuidador cuidador){
         return new CuidadorDTO(
@@ -127,9 +149,6 @@ public class CuidadorBean {
             dtos.add(cuidadorToDTO(c));
         }
         return dtos;
-    }
-
-    
-    
+    }  
 }
 

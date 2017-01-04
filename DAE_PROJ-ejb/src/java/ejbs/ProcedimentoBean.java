@@ -23,13 +23,13 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.Path;
 
 /**
  *
  * @author brunoalexandredesousahenriques
  */
 @Stateless
-@LocalBean
 public class ProcedimentoBean {
 
     @PersistenceContext
