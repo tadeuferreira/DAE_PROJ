@@ -124,7 +124,6 @@ public class UtenteBean implements Serializable {
     public void enrollUtenteToCuidador(String username, String code)
             throws EntityDoesNotExistException, CuidadorAssociatedException, UtenteAssociatedException{
         try {
-
             Cuidador cuidador = em.find(Cuidador.class, username);
             if (cuidador == null) {
                 throw new EntityDoesNotExistException("There is no cuidador with that username.");

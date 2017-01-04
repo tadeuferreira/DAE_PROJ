@@ -16,6 +16,7 @@ import exceptions.EntityDoesNotExistException;
 import exceptions.MaterialAssociatedException;
 import exceptions.MaterialNotEnrolledException;
 import exceptions.MyConstraintViolationException;
+import exceptions.NecessidadeAssociatedException;
 import exceptions.Utils;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -222,7 +223,7 @@ public class MaterialBean implements Serializable{
             
             Cuidador cuidador = em.find(Cuidador.class, username);
             if(cuidador == null){
-                throw new EntityDoesNotExistException("There is no student with that username.");
+                throw new EntityDoesNotExistException("There is no cuidador with that username.");
             }
             
             if(!cuidador.getMaterials().contains(material)){
@@ -258,7 +259,7 @@ public class MaterialBean implements Serializable{
     } 
     
     public void associateMaterialToNecessidade(int number, int materialCode)
-            throws EntityDoesNotExistException, CuidadorAssociatedException, MaterialAssociatedException{
+            throws EntityDoesNotExistException, NecessidadeAssociatedException, MaterialAssociatedException{
         try {
 
             Necessidade necessidade = em.find(Necessidade.class, number);
@@ -271,24 +272,26 @@ public class MaterialBean implements Serializable{
                 throw new EntityDoesNotExistException("There is no material with that code.");
             }
 
-            if (necessidade.getMateriais().contains(material)) {
-                throw new MaterialAssociatedException("Material is already associated with that necessidade.");
-            }
-
-            if (material.getCuidadores().contains(necessidade)) {
-                throw new CuidadorAssociatedException("Necessidade is already associated with that material.");
-            }
-
+            
+                if (necessidade.getMateriais().contains(material)) {
+                    throw new MaterialAssociatedException("Material is already associated with that necessidade.");
+                }
+            
+                if (material.getNecessidades().contains(necessidade)) {
+                    throw new NecessidadeAssociatedException("Necessidade is already associated with that material.");
+                }
+            
+            
             material.addNecessidade(necessidade);
             necessidade.addMaterial(material);
 
-        } catch (EntityDoesNotExistException | CuidadorAssociatedException | MaterialAssociatedException e) {
+        } catch (EntityDoesNotExistException | NecessidadeAssociatedException | MaterialAssociatedException e) {
             throw e;
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
     } 
- public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(List<NecessidadeDTO> neces) throws EntityDoesNotExistException{
+ /*public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(List<NecessidadeDTO> neces) throws EntityDoesNotExistException{
         try {
             List<Material> materials = new ArrayList<>();
             for(NecessidadeDTO n: neces){
@@ -307,7 +310,7 @@ public class MaterialBean implements Serializable{
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-    }
+    }*/
     
     public List<MaterialDTO> getAssociatedMateriaisOfNecessidade(int number) throws EntityDoesNotExistException{
         try {
@@ -342,7 +345,7 @@ public class MaterialBean implements Serializable{
             }            
             
             necessidade.removeMaterial(material);
-            material.removeCuidador(necessidade);
+            material.removeNecessidade(necessidade);
 
         } catch (EntityDoesNotExistException | MaterialNotEnrolledException e) {
             throw e;             

@@ -113,7 +113,7 @@ public class Material implements Serializable {
         this.necessidades.add(necessidade);
     }
     
-    public void removeCuidador(Necessidade necessidade){
+    public void removeNecessidade(Necessidade necessidade){
         this.necessidades.remove(necessidade);
     }
 
