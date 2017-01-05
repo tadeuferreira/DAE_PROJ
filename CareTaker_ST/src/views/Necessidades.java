@@ -44,17 +44,17 @@ public class Necessidades extends javax.swing.JDialog {
         jLabel5.setText(utente.getName());
     }
     private void atualizarLista() {
-        List<MaterialDTO> materials = null;    
+        List<NecessidadeDTO> materials = null;    
         DefaultListModel model=new DefaultListModel();
         jList1.setModel(model);
         try{        
             materials = LoginBean.INSTANCE.getClient().target(LoginBean.INSTANCE.getBaseUri())
             .path("/necessities/patient/"+utente.getCode())
             .request(MediaType.APPLICATION_XML)
-            .get(new GenericType<List<MaterialDTO>>() {
+            .get(new GenericType<List<NecessidadeDTO>>() {
             });
              model=new DefaultListModel();
-            for(MaterialDTO m : materials){
+            for(NecessidadeDTO m : materials){
                 model.addElement(m);
             }
             jList1.setModel(model);
